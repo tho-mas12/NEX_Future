@@ -41,7 +41,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
+# Include routers with /api prefix (for standard public requests)
 app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(onboarding.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard.router, prefix=settings.API_V1_STR)
@@ -51,6 +51,17 @@ app.include_router(platform_settings.router, prefix=settings.API_V1_STR)
 app.include_router(revision.router, prefix=settings.API_V1_STR)
 app.include_router(analysis.router, prefix=settings.API_V1_STR)
 app.include_router(student_features.router, prefix=settings.API_V1_STR)
+
+# Also include routers without /api prefix (in case reverse proxy / service rewrite strips the prefix)
+app.include_router(auth.router)
+app.include_router(onboarding.router)
+app.include_router(dashboard.router)
+app.include_router(study.router)
+app.include_router(admin.router)
+app.include_router(platform_settings.router)
+app.include_router(revision.router)
+app.include_router(analysis.router)
+app.include_router(student_features.router)
 
 @app.get("/health")
 @app.get("/api/health")
