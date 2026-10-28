@@ -1,0 +1,35 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'admin' ||
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+
+    // PDF Formula Notes and Study Sheets (Publicly readable to authenticated students, admin write)
+    match /notes/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Admin MCQ CSV bulk uploads
+    match /mcq_imports/{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+
+    // User profile images
+    match /avatars/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && request.auth.uid == userId
+                    && request.resource.size < 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

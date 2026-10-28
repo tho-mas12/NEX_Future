@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'admin' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+
+    // 1. User Profiles & Roles
+    match /users/{userId} {
+      // Any authenticated user can read their own profile; admins can read any
+      allow read: if isOwner(userId) || isAdmin();
+
+      // Users can create their own initial profile, but role MUST default to 'user'
+      allow create: if isOwner(userId) && request.resource.data.role == 'user';
+
+      // Users can update their profile fields (name, exam date, streak), but CANNOT elevate their own role
+      allow update: if (isOwner(userId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']))
+                    || isAdmin();
+
+      // Only admins can delete user records
+      allow delete: if isAdmin();
+    }
+
+    // 2. Curriculum, Topics, and Lessons
+    match /topics/{topicId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+
+      match /lessons/{lessonId} {
+        allow read: if isAuthenticated();
+        allow write: if isAdmin();
+      }
+    }
+
+    // 3. Question Bank & MCQs
+    match /questions/{questionId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // 4. Roadmap Templates (180-Day Structure)
+    match /roadmap_templates/{templateId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // 5. User Progress (Lessons Completed, Readiness Score)
+    match /user_progress/{progressId} {
+      allow read, write: if isAuthenticated() && (
+        resource == null || resource.data.user_id == request.auth.uid || isAdmin()
+      );
+    }
+
+    // 6. Mistake Notebook (Bookmarked Questions, Re-test logs)
+    match /mistakes/{mistakeId} {
+      allow read, write: if isAuthenticated() && (
+        resource == null || resource.data.user_id == request.auth.uid || isAdmin()
+      );
+    }
+
+    // 7. Global Platform Settings
+    match /settings/{settingId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+  }
+}
