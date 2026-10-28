@@ -97,6 +97,14 @@ export default function App() {
           }
         />
         <Route
+          path="/syllabus"
+          element={
+            <ProtectedRoute>
+              <TopicAnalysisPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/mock-arena"
           element={
             <ProtectedRoute>
@@ -163,12 +171,15 @@ export default function App() {
           }
         >
           <Route index element={<AdminOverviewPage />} />
+          <Route path="analytics" element={<AdminOverviewPage />} />
           <Route path="subjects" element={<AdminSubjectsPage />} />
           <Route path="curriculum" element={<AdminCurriculumPage />} />
+          <Route path="schedule" element={<AdminCurriculumPage />} />
           <Route path="mcqs" element={<AdminMCQHubPage />} />
           <Route path="mocks" element={<AdminMockStudioPage />} />
           <Route path="pyqs" element={<AdminPYQPage />} />
           <Route path="current-affairs" element={<AdminCurrentAffairsPage />} />
+          <Route path="ca-pyq" element={<AdminCurrentAffairsPage />} />
           <Route path="topics" element={<AdminTopicsPage />} />
           <Route path="roadmap" element={<AdminRoadmapPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />

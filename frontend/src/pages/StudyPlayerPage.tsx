@@ -238,33 +238,35 @@ export const StudyPlayerPage: React.FC = () => {
             </span>
             <button
               onClick={() => setIsBigScreen(!isBigScreen)}
-              className="flex items-center text-xs font-bold border border-slate-300 bg-white px-3 py-1.5 hover:bg-slate-50 text-slate-700 rounded-xl gap-1.5 shadow-sm transition"
+              className="flex items-center text-xs font-bold border border-slate-300 bg-white px-3 py-2 hover:bg-slate-50 text-slate-700 rounded-xl gap-1.5 shadow-xs transition active:scale-95 min-h-[44px]"
             >
               <Play className="w-3.5 h-3.5 text-blue-600" />
-              <span>{isBigScreen ? 'Switch to Split Screen' : 'Toggle Big Screen Player'}</span>
+              <span>{isBigScreen ? 'Switch to Split Screen' : 'Toggle Theater Player'}</span>
             </button>
           </div>
 
-          <div className={`grid gap-6 flex-1 ${isBigScreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2 min-h-[550px]'}`}>
-            {/* YouTube Video Embed - Big Theater Screen inside site */}
-            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden flex flex-col shadow-sm">
+          <div className={`grid gap-6 flex-1 ${isBigScreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}`}>
+            {/* YouTube Video Embed - Perfect 16:9 Aspect Video on all screen sizes */}
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden flex flex-col shadow-xs">
               <div className="px-5 py-3.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
                 <span className="text-xs font-bold text-blue-700 flex items-center gap-2">
                   <Play className="w-3.5 h-3.5 text-blue-600 fill-blue-600" />
                   Curated Video Lecture (In-App Player)
                 </span>
                 <span className="text-xs text-slate-500 font-mono">
-                  {isBigScreen ? 'Theater Cinema Mode Active' : `ID: ${lesson.youtube_embed_id}`}
+                  {isBigScreen ? 'Theater Mode Active' : `ID: ${lesson.youtube_embed_id}`}
                 </span>
               </div>
-              <div className={`w-full bg-slate-950 flex items-center justify-center ${isBigScreen ? 'h-[520px] sm:h-[600px]' : 'flex-1 min-h-[380px]'}`}>
-                <iframe
-                  className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${lesson.youtube_embed_id}?autoplay=0&rel=0&modestbranding=1`}
-                  title={lesson.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
+              <div className="w-full bg-slate-950 flex items-center justify-center p-0.5 sm:p-1">
+                <div className="w-full aspect-video rounded-2xl overflow-hidden">
+                  <iframe
+                    className="w-full h-full aspect-video"
+                    src={`https://www.youtube.com/embed/${lesson.youtube_embed_id}?autoplay=0&rel=0&modestbranding=1`}
+                    title={lesson.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </div>
 

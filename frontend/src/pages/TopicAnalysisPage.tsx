@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { apiRequest } from '@/lib/api';
 import confetti from 'canvas-confetti';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 
 interface LessonStatusItem {
   id: string;
@@ -205,7 +206,7 @@ export const TopicAnalysisPage: React.FC = () => {
       </header>
 
       {/* Main Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+      <div className="flex-1 max-w-7xl w-full mx-auto p-6 pb-24 md:pb-8 space-y-6">
         {/* Coverage Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
@@ -540,6 +541,8 @@ export const TopicAnalysisPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      <MobileBottomNav />
     </div>
   );
 };

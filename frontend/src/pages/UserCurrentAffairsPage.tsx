@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { apiRequest } from '@/lib/api';
 import confetti from 'canvas-confetti';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 
 interface CurrentAffairsModule {
   id: string;
@@ -157,7 +158,7 @@ export const UserCurrentAffairsPage: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 pb-24 md:pb-8 space-y-6">
         {/* VIEW 1: MODULES DIRECTORY */}
         {!activeModule && (
           <div className="space-y-6">
@@ -401,6 +402,9 @@ export const UserCurrentAffairsPage: React.FC = () => {
           </div>
         )}
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav />
     </div>
   );
 };

@@ -23,6 +23,7 @@ import { Badge } from '@/components/ui/badge';
 import { apiRequest } from '@/lib/api';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 
 interface DayGridItem {
   day_number: number;
@@ -281,7 +282,7 @@ export const DashboardPage: React.FC = () => {
       </header>
 
       {/* Main Dashboard Layout */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-8 space-y-6">
         {/* HARDCORE SPACED-REPETITION BLOCKER BANNER */}
         {is_locked && (
           <div className="rounded-2xl border-2 border-rose-300 bg-rose-50 p-5 shadow-md animate-in fade-in duration-300">
@@ -726,6 +727,9 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Bottom Navigation Bar (< 768px) */}
+      <MobileBottomNav />
     </div>
   );
 };
