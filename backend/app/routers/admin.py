@@ -1190,3 +1190,90 @@ async def delete_current_affairs_question(
     return {"success": True, "total_questions": len(q_list)}
 
 
+
+
+from pydantic import BaseModel
+from app.models.user import UserRole
+
+class AdminGrantRequest(BaseModel):
+    email: str
+    name: Optional[str] = None
+    role: Optional[str] = "admin"
+    password: Optional[str] = None
+
+@router.get("/access-list")
+async def get_admin_access_list(
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """Returns list of administrators."""
+    res = await session.exec(select(User).where(User.role == UserRole.ADMIN))
+    admins = res.all()
+    return [
+        {
+            "id": str(a.id),
+            "name": a.name,
+            "email": a.email,
+            "role": str(a.role),
+            "created_at": a.created_at.isoformat() if a.created_at else None,
+            "last_login": a.last_login.isoformat() if a.last_login else None,
+            "is_current_user": a.id == current_admin.id
+        }
+        for a in admins
+    ]
+
+@router.post("/access-grant")
+async def grant_admin_access(
+    req: AdminGrantRequest,
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """Grants admin access to an existing user or registers a new admin."""
+    from app.core.security import get_password_hash
+    clean_email = req.email.strip().lower()
+    if not clean_email or "@" not in clean_email:
+        raise HTTPException(status_code=400, detail="Valid email address is required")
+
+    user = (await session.exec(select(User).where(User.email == clean_email))).first()
+    if user:
+        user.role = UserRole.ADMIN
+        if req.name and req.name.strip():
+            user.name = req.name.strip()
+        if req.password and len(req.password) >= 6:
+            user.hashed_password = get_password_hash(req.password)
+        session.add(user)
+        await session.commit()
+        return {"success": True, "message": f"Admin privileges granted to {clean_email}"}
+    else:
+        pwd = req.password if (req.password and len(req.password) >= 6) else "admin123"
+        name = req.name.strip() if (req.name and req.name.strip()) else clean_email.split("@")[0].capitalize()
+        new_admin = User(
+            email=clean_email,
+            name=name,
+            role=UserRole.ADMIN,
+            hashed_password=get_password_hash(pwd),
+            onboarding_completed=True,
+            streak_count=0
+        )
+        session.add(new_admin)
+        await session.commit()
+        return {"success": True, "message": f"New administrator {clean_email} created successfully"}
+
+@router.delete("/access-revoke/{user_id}")
+async def revoke_admin_access(
+    user_id: uuid.UUID,
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """Revokes admin access from a user (downgrades to student)."""
+    if user_id == current_admin.id:
+        raise HTTPException(status_code=400, detail="Cannot revoke your own administrator account")
+
+    user = (await session.exec(select(User).where(User.id == user_id))).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.role = UserRole.STUDENT
+    session.add(user)
+    await session.commit()
+    return {"success": True, "message": f"Admin privileges revoked from {user.email}"}

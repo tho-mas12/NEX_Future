@@ -53,5 +53,6 @@ app.include_router(analysis.router, prefix=settings.API_V1_STR)
 app.include_router(student_features.router, prefix=settings.API_V1_STR)
 
 @app.get("/health")
+@app.get("/api/health")
 async def health_check():
-    return {"status": "ok", "service": "ExamRail API"}
+    return {"status": "ok", "service": "NEX ExamRail API"}

@@ -3,7 +3,11 @@ from pydantic_settings import BaseSettings
 
 def get_normalized_db_url() -> str:
     backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    default_db_path = os.path.join(backend_dir, "examrail.db").replace("\\", "/")
+    if os.getenv("VERCEL"):
+        default_db_path = "/tmp/examrail.db"
+    else:
+        default_db_path = os.path.join(backend_dir, "examrail.db").replace("\\", "/")
+        
     raw_url = os.getenv(
         "DATABASE_URL", 
         f"sqlite+aiosqlite:///{default_db_path}"

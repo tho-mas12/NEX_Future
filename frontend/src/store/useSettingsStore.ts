@@ -8,6 +8,12 @@ export interface GlobalSettings {
   revision_pass_percent: number;
   revision_deadline_days: number;
   daily_main_topics_count: number;
+  gemini_api_key_masked?: string;
+  gemini_api_key_configured?: boolean;
+  youtube_api_key_masked?: string;
+  youtube_api_key_configured?: boolean;
+  maintenance_mode?: boolean;
+  allow_registrations?: boolean;
 }
 
 interface SettingsState {
@@ -15,7 +21,7 @@ interface SettingsState {
   loading: boolean;
   error: string | null;
   fetchSettings: () => Promise<GlobalSettings>;
-  updateSettings: (newSettings: Omit<GlobalSettings, 'id'>) => Promise<GlobalSettings>;
+  updateSettings: (newSettings: Partial<GlobalSettings> & { gemini_api_key?: string; youtube_api_key?: string }) => Promise<GlobalSettings>;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -26,6 +32,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     revision_pass_percent: 80,
     revision_deadline_days: 2,
     daily_main_topics_count: 2,
+    maintenance_mode: false,
+    allow_registrations: true,
   },
   loading: false,
   error: null,

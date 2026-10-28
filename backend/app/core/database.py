@@ -3,6 +3,7 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import SQLModel, select
+from sqlalchemy import text
 from app.core.config import settings
 
 # Engine configuration
@@ -10,8 +11,6 @@ engine_args = {"echo": False, "future": True}
 if "sqlite" in settings.DATABASE_URL:
     engine_args["connect_args"] = {"check_same_thread": False}
 elif "postgresql+asyncpg" in settings.DATABASE_URL:
-    # If connecting to cloud postgres (e.g. Supabase, Neon, Render)
-    # enable SSL if not localhost
     if "localhost" not in settings.DATABASE_URL and "127.0.0.1" not in settings.DATABASE_URL:
         import ssl
         ctx = ssl.create_default_context()
@@ -25,6 +24,17 @@ async_session_maker = async_sessionmaker(engine, class_=AsyncSession, expire_on_
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
+        # Idempotent column check for SQLite/Postgres
+        for col_sql in [
+            "ALTER TABLE global_settings ADD COLUMN gemini_api_key VARCHAR",
+            "ALTER TABLE global_settings ADD COLUMN youtube_api_key VARCHAR",
+            "ALTER TABLE global_settings ADD COLUMN maintenance_mode BOOLEAN DEFAULT 0",
+            "ALTER TABLE global_settings ADD COLUMN allow_registrations BOOLEAN DEFAULT 1",
+        ]:
+            try:
+                await conn.execute(text(col_sql))
+            except Exception:
+                pass
     
     # Auto-seed if GlobalSettings or Topics are empty
     from app.models.settings import GlobalSettings
@@ -41,7 +51,9 @@ async def init_db():
                 mock_q_count=25,
                 revision_pass_percent=80,
                 revision_deadline_days=2,
-                daily_main_topics_count=2
+                daily_main_topics_count=2,
+                maintenance_mode=False,
+                allow_registrations=True
             )
             session.add(default_settings)
             await session.commit()
