@@ -32,7 +32,6 @@ export const RegisterPage: React.FC = () => {
 
     try {
       await register(name, email, password);
-      // Trigger full screen logo revealing transition into onboarding
       setShowRegisterReveal(true);
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please try again.');
@@ -52,27 +51,27 @@ export const RegisterPage: React.FC = () => {
       )}
 
       {/* Left Column: Graphic & Value Proposition */}
-      <div className="hidden lg:flex flex-col justify-between p-12 border-r border-white/10 relative overflow-hidden backdrop-blur-md">
+      <div className="hidden lg:flex flex-col justify-between p-12 border-r border-slate-200/60 relative overflow-hidden">
         {/* Top Logo */}
         <Link to="/" className="flex items-center gap-3 z-10">
           <img
             src="/logo.png"
             alt="NEX Logo"
-            className="h-11 w-11 object-contain rounded-xl shadow-lg border border-white/15 shrink-0"
+            className="h-11 w-11 object-contain rounded-xl shadow-md border border-slate-200 shrink-0"
           />
-          <span className="font-black text-2xl tracking-tight text-white">
+          <span className="font-black text-2xl tracking-tight text-slate-900">
             NEX
           </span>
         </Link>
 
         {/* Center Benefits List */}
         <div className="space-y-6 max-w-lg z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/30 text-xs font-bold text-amber-300">
-            <ShieldCheck className="h-4 w-4 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800">
+            <ShieldCheck className="h-4 w-4 text-amber-600" />
             180-Day Guaranteed Blueprint
           </div>
 
-          <h1 className="text-4xl font-black text-white leading-tight tracking-tight">
+          <h1 className="text-4xl font-black text-slate-900 leading-tight tracking-tight">
             Stop Studying Aimlessly. Start Your 180-Day Guided Rail.
           </h1>
 
@@ -84,10 +83,10 @@ export const RegisterPage: React.FC = () => {
               'Stage 4: Mandatory spaced repetition lock gates (+3, +7, +20, +30 days)',
             ].map((text, idx) => (
               <div key={idx} className="flex items-start gap-3">
-                <div className="h-5 w-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="h-5 w-5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="h-3 w-3 stroke-[3]" />
                 </div>
-                <span className="text-xs text-slate-300 font-medium leading-relaxed">
+                <span className="text-xs text-slate-700 font-medium leading-relaxed">
                   {text}
                 </span>
               </div>
@@ -96,7 +95,7 @@ export const RegisterPage: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="text-xs text-slate-400 z-10">
+        <div className="text-xs text-slate-500 z-10">
           Structured for SSC CGL 2026, CHSL 2026 & Central Examinations
         </div>
       </div>
@@ -109,32 +108,32 @@ export const RegisterPage: React.FC = () => {
               <img
                 src="/logo.png"
                 alt="NEX Logo"
-                className="h-11 w-11 object-contain rounded-xl shadow-lg border border-white/15 shrink-0"
+                className="h-11 w-11 object-contain rounded-xl shadow-md border border-slate-200 shrink-0"
               />
-              <span className="font-black text-2xl text-white">NEX</span>
+              <span className="font-black text-2xl text-slate-900">NEX</span>
             </Link>
           </div>
 
-          <Card className="border border-white/10 bg-slate-900/80 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
-            <CardHeader className="space-y-1 pb-4 border-b border-white/5">
-              <CardTitle className="text-2xl font-black tracking-tight text-white">
+          <Card className="border border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-xl rounded-3xl overflow-hidden">
+            <CardHeader className="space-y-1 pb-4 border-b border-slate-100">
+              <CardTitle className="text-2xl font-black tracking-tight text-slate-900">
                 Initialize Candidate Profile
               </CardTitle>
-              <CardDescription className="text-slate-400 text-xs">
+              <CardDescription className="text-slate-500 text-xs">
                 Set up your 180-day trajectory. Zero payment details needed.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="pt-6">
               {error && (
-                <div className="mb-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 p-3.5 text-xs text-rose-300 font-bold animate-in fade-in">
+                <div className="mb-4 rounded-2xl bg-rose-50 border border-rose-200 p-3.5 text-xs text-rose-700 font-bold animate-in fade-in">
                   {error}
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300" htmlFor="name">
+                  <label className="text-xs font-bold text-slate-700" htmlFor="name">
                     Full Name
                   </label>
                   <Input
@@ -144,12 +143,12 @@ export const RegisterPage: React.FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-xl h-11"
+                    className="border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl h-11"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300" htmlFor="email">
+                  <label className="text-xs font-bold text-slate-700" htmlFor="email">
                     Email Address
                   </label>
                   <Input
@@ -160,12 +159,12 @@ export const RegisterPage: React.FC = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     autoComplete="email"
-                    className="border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-xl h-11"
+                    className="border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl h-11"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300" htmlFor="password">
+                  <label className="text-xs font-bold text-slate-700" htmlFor="password">
                     Create Password
                   </label>
                   <div className="relative">
@@ -177,12 +176,12 @@ export const RegisterPage: React.FC = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       autoComplete="new-password"
-                      className="border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-xl pr-10 h-11"
+                      className="border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl pr-10 h-11"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-slate-400 hover:text-white"
+                      className="absolute right-3 top-3 text-slate-400 hover:text-slate-700"
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -193,7 +192,7 @@ export const RegisterPage: React.FC = () => {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-slate-950 font-black text-sm mt-3 shadow-lg shadow-amber-500/25 rounded-xl h-11 active:scale-95 transition"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm mt-3 shadow-md shadow-blue-600/25 rounded-xl h-11 active:scale-95 transition"
                 >
                   {loading ? (
                     <>
@@ -210,10 +209,10 @@ export const RegisterPage: React.FC = () => {
               </form>
             </CardContent>
 
-            <CardFooter className="flex flex-col space-y-3 border-t border-white/5 pt-4 text-center">
-              <p className="text-xs text-slate-400">
+            <CardFooter className="flex flex-col space-y-3 border-t border-slate-100 pt-4 text-center">
+              <p className="text-xs text-slate-500">
                 Already have an account?{' '}
-                <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-bold hover:underline">
+                <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold hover:underline">
                   Log in here
                 </Link>
               </p>

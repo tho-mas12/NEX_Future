@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Play, Volume2, VolumeX, Sparkles } from 'lucide-react';
 
 interface LogoRevealOverlayProps {
   onComplete: () => void;
@@ -9,27 +8,25 @@ interface LogoRevealOverlayProps {
 
 export const LogoRevealOverlay: React.FC<LogoRevealOverlayProps> = ({
   onComplete,
-  storageKey = 'nex_logo_revealed_v1',
+  storageKey = 'nex_logo_revealed_v2',
   forceShow = false,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const [needsUserInteraction, setNeedsUserInteraction] = useState(false);
 
   useEffect(() => {
-    // If not forced and already seen in this session, skip smoothly
+    // Check session storage if not forced
     if (!forceShow && sessionStorage.getItem(storageKey)) {
       setVisible(false);
       onComplete();
       return;
     }
 
+    // Safety timeout in case video stalls or ends
     const timer = setTimeout(() => {
-      // Safety timeout: dismiss if video takes more than 10 seconds
       handleEnd();
-    }, 10000);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, [forceShow, storageKey]);
@@ -41,94 +38,51 @@ export const LogoRevealOverlay: React.FC<LogoRevealOverlayProps> = ({
     setTimeout(() => {
       setVisible(false);
       onComplete();
-    }, 800); // 800ms fade transition
-  };
-
-  const handleStartPlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play().then(() => {
-        setNeedsUserInteraction(false);
-      }).catch(() => {
-        // Fallback dismiss if autoplay blocked entirely
-        handleEnd();
-      });
-    }
+    }, 600); // 600ms smooth fade transition
   };
 
   if (!visible) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-[#100e0b] flex items-center justify-center overflow-hidden transition-opacity duration-700 ${
+      onClick={handleEnd}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden transition-opacity duration-500 cursor-pointer ${
         fading ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
-      style={{ minHeight: '100vh', minWidth: '100vw' }}
+      style={{
+        minHeight: '100vh',
+        minWidth: '100vw',
+        backgroundColor: '#faf8f2', // Midnight sapphire base background
+      }}
     >
-      {/* High-fidelity full screen cover video player */}
-      <video
-        ref={videoRef}
-        src="/logo-reveal.mp4"
-        autoPlay
-        playsInline
-        muted={isMuted}
-        preload="auto"
-        onEnded={handleEnd}
-        onLoadedData={() => {
-          if (videoRef.current) {
-            videoRef.current.play().catch(() => {
-              setNeedsUserInteraction(true);
-            });
-          }
-        }}
-        onError={() => {
-          // If video can't load, dismiss gracefully immediately
-          handleEnd();
-        }}
-        className="w-full h-full object-contain md:object-cover max-h-screen max-w-screen"
-        style={{
-          filter: 'drop-shadow(0 0 40px rgba(129,140,248,0.25))',
-        }}
-      />
-
-      {/* Atmospheric subtle ambient backdrop lighting */}
+      {/* Ambient background glow layers matching Midnight Sapphire */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(129,140,248,0.12) 0%, transparent 70%)',
-          mixBlendMode: 'screen',
+          background: 'linear-gradient(rgba(0,0,0,0) 0%, rgba(61,90,255,0.15) 28%, rgb(255,255,255) 18%, rgb(45,55,135) 68%, rgb(20,25,60) 100%)',
+          mixBlendMode: 'multiply',
+          filter: 'blur(100px)',
         }}
         aria-hidden="true"
       />
 
-      {/* Manual play button if mobile browser blocks autoplay */}
-      {needsUserInteraction && (
-        <button
-          onClick={handleStartPlay}
-          className="absolute z-20 px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center gap-2 shadow-2xl shadow-amber-500/40 animate-pulse transition active:scale-95"
-        >
-          <Play className="w-5 h-5 fill-current" />
-          <span>Enter NEX Experience</span>
-        </button>
-      )}
-
-      {/* Control bar: Skip & Mute toggle */}
-      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-3">
-        <button
-          onClick={() => setIsMuted(!isMuted)}
-          className="p-3 rounded-xl bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/15 transition active:scale-95"
-          title={isMuted ? 'Unmute' : 'Mute'}
-          aria-label="Toggle Sound"
-        >
-          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-        </button>
-
-        <button
-          onClick={handleEnd}
-          className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold backdrop-blur-md border border-white/15 transition active:scale-95 flex items-center gap-1.5"
-        >
-          <span>Skip Intro</span>
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-        </button>
+      {/* Responsive video container: scales seamlessly across mobile portrait, tablet, and desktop */}
+      <div className="relative z-10 w-full h-full flex items-center justify-center p-2 sm:p-6">
+        <video
+          ref={videoRef}
+          src="/logo-reveal.mp4"
+          autoPlay
+          playsInline
+          muted
+          preload="auto"
+          onEnded={handleEnd}
+          onError={handleEnd}
+          className="max-h-[92vh] max-w-[95vw] w-auto h-auto object-contain rounded-3xl shadow-2xl transition-transform duration-300"
+          style={{
+            mixBlendMode: 'normal',
+            filter: 'drop-shadow(0 15px 35px rgba(45, 55, 135, 0.25))',
+          }}
+        />
       </div>
     </div>
   );

@@ -18,25 +18,41 @@ async def get_gemini_key(session: AsyncSession) -> Optional[str]:
         pass
     return os.getenv("GEMINI_API_KEY")
 
+# Prioritized list of active generative models supported by the Google Gemini API
+CANDIDATE_MODELS = [
+    "gemini-flash-lite-latest",
+    "gemini-flash-latest",
+    "gemini-2.5-flash",
+    "gemini-1.5-flash",
+]
+
 def call_gemini_rest(prompt: str, api_key: str) -> Optional[str]:
-    """Invokes Gemini 1.5 Flash via REST API."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    """Invokes Gemini API trying the verified active models with failover."""
     headers = {"Content-Type": "application/json"}
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0.4, "maxOutputTokens": 2048}
     }
-    req = urllib.request.Request(url, data=json.dumps(body).encode("utf-8"), headers=headers, method="POST")
-    try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            candidates = data.get("candidates", [])
-            if candidates:
-                text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-                return text.strip()
-    except Exception as e:
-        print(f"Gemini API call failed: {e}")
-        return None
+    encoded_body = json.dumps(body).encode("utf-8")
+
+    for model_name in CANDIDATE_MODELS:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+        req = urllib.request.Request(url, data=encoded_body, headers=headers, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=12) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                candidates = data.get("candidates", [])
+                if candidates:
+                    text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    if text.strip():
+                        return text.strip()
+        except urllib.error.HTTPError as e:
+            # If 404 or unsupported on this endpoint, try next candidate model
+            continue
+        except Exception as e:
+            continue
+
+    return None
 
 async def generate_lesson_summary_and_tricks(
     title: str,
@@ -48,7 +64,7 @@ async def generate_lesson_summary_and_tricks(
     api_key = await get_gemini_key(session)
     if api_key:
         prompt = f"""
-You are an expert SSC CGL & CHSL educator and exam topper.
+You are an expert SSC CGL & CHSL educator.
 For the lesson:
 Title: {title}
 Subject: {subject}
@@ -91,7 +107,7 @@ async def generate_stage2_active_recall(
     subject: str,
     session: AsyncSession
 ) -> List[Dict[str, Any]]:
-    """Generates 5-10 Stage 2 Active Recall flashcard questions with hidden shortcuts."""
+    """Generates 5 Stage 2 Active Recall flashcard questions with hidden shortcuts."""
     api_key = await get_gemini_key(session)
     if api_key:
         prompt = f"""
@@ -104,7 +120,7 @@ Return strictly a valid JSON array of 5 objects with keys:
 - "opt_b": option B
 - "opt_c": option C
 - "opt_d": option D
-- "correct_opt": "A", "B", "C", or "D"
+- "correct_opt": "A", "B", "C", or "D" (must be single capital letter)
 - "explanation": step-by-step reasoning
 - "short_trick": the fast 15-second shortcut (Vedic/elimination)
 Strictly output JSON only, no markdown ticks, no preamble.
@@ -115,10 +131,20 @@ Strictly output JSON only, no markdown ticks, no preamble.
                 clean = raw.strip()
                 if clean.startswith("```json"):
                     clean = clean[7:]
+                if clean.startswith("```"):
+                    clean = clean[3:]
                 if clean.endswith("```"):
                     clean = clean[:-3]
                 parsed = json.loads(clean.strip())
                 if isinstance(parsed, list) and len(parsed) >= 3:
+                    # Clean correct_opt format (ensure single character uppercase)
+                    for q in parsed:
+                        c_opt = str(q.get("correct_opt", "A")).strip().upper()
+                        if "A" in c_opt: q["correct_opt"] = "A"
+                        elif "B" in c_opt: q["correct_opt"] = "B"
+                        elif "C" in c_opt: q["correct_opt"] = "C"
+                        elif "D" in c_opt: q["correct_opt"] = "D"
+                        else: q["correct_opt"] = "A"
                     return parsed
             except Exception as e:
                 print("Failed to parse Gemini JSON:", e)
@@ -201,7 +227,7 @@ Return strictly a valid JSON array of 5 objects with keys:
 - "opt_b": string
 - "opt_c": string
 - "opt_d": string
-- "correct_opt": "A", "B", "C", or "D"
+- "correct_opt": "A", "B", "C", or "D" (must be single capital letter)
 - "explanation": step-by-step solution
 - "short_trick": 15-second shortcut
 Strictly JSON array only.
@@ -212,10 +238,19 @@ Strictly JSON array only.
                 clean = raw.strip()
                 if clean.startswith("```json"):
                     clean = clean[7:]
+                if clean.startswith("```"):
+                    clean = clean[3:]
                 if clean.endswith("```"):
                     clean = clean[:-3]
                 parsed = json.loads(clean.strip())
                 if isinstance(parsed, list) and len(parsed) >= 3:
+                    for q in parsed:
+                        c_opt = str(q.get("correct_opt", "A")).strip().upper()
+                        if "A" in c_opt: q["correct_opt"] = "A"
+                        elif "B" in c_opt: q["correct_opt"] = "B"
+                        elif "C" in c_opt: q["correct_opt"] = "C"
+                        elif "D" in c_opt: q["correct_opt"] = "D"
+                        else: q["correct_opt"] = "A"
                     return parsed
             except Exception as e:
                 print("Failed to parse Gemini quiz JSON:", e)

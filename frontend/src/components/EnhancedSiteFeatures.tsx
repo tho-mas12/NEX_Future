@@ -8,16 +8,12 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
-  Sun,
-  Moon,
   Send,
   CheckCircle,
 } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 
 export const EnhancedSiteFeatures: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   // Scroll Progress & Back to Top
@@ -146,7 +142,7 @@ export const EnhancedSiteFeatures: React.FC = () => {
 
       {/* 2. Top Scroll Progress Bar */}
       <div
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-500 via-indigo-500 to-blue-500 z-[9998] transition-all duration-150 ease-out pointer-events-none"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-amber-500 z-[9998] transition-all duration-150 ease-out pointer-events-none"
         style={{ width: `${scrollProgress}%` }}
         aria-hidden="true"
       />
@@ -158,31 +154,17 @@ export const EnhancedSiteFeatures: React.FC = () => {
           <button
             onClick={scrollToTop}
             aria-label="Back to top"
-            className="p-3 rounded-2xl bg-slate-900/80 hover:bg-slate-900 dark:bg-white/10 dark:hover:bg-white/20 text-white backdrop-blur-xl border border-white/10 shadow-xl transition active:scale-95 group"
+            className="p-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-xl transition active:scale-95 group"
           >
             <ArrowUp className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
           </button>
         )}
 
-        {/* Global Dark / Light Theme Toggle Button */}
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-          className="p-3 rounded-2xl bg-slate-900/80 hover:bg-slate-900 dark:bg-white/10 dark:hover:bg-white/20 text-amber-400 backdrop-blur-xl border border-white/10 shadow-xl transition active:scale-95 group"
-          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-        >
-          {theme === 'dark' ? (
-            <Sun className="w-4 h-4 transition-transform group-hover:rotate-45" />
-          ) : (
-            <Moon className="w-4 h-4 transition-transform group-hover:-rotate-12" />
-          )}
-        </button>
-
         {/* Site Search Trigger */}
         <button
           onClick={() => setSearchOpen(true)}
           aria-label="Site Search (Ctrl+K)"
-          className="p-3 rounded-2xl bg-slate-900/80 hover:bg-slate-900 dark:bg-white/10 dark:hover:bg-white/20 text-blue-400 backdrop-blur-xl border border-white/10 shadow-xl transition active:scale-95"
+          className="p-3 rounded-2xl bg-white hover:bg-slate-50 text-blue-600 border border-slate-200 shadow-xl transition active:scale-95"
           title="Search Platform (Ctrl+K)"
         >
           <Search className="w-4 h-4" />
@@ -192,7 +174,7 @@ export const EnhancedSiteFeatures: React.FC = () => {
         <button
           onClick={() => setContactOpen(true)}
           aria-label="Contact / Ask Educator"
-          className="px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-xl shadow-blue-600/30 backdrop-blur-xl border border-white/20 flex items-center gap-2 transition active:scale-95"
+          className="px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-xl shadow-blue-600/25 border border-blue-500/20 flex items-center gap-2 transition active:scale-95"
         >
           <MessageCircle className="w-4 h-4" />
           <span className="hidden sm:inline">Ask NEX</span>
@@ -201,9 +183,9 @@ export const EnhancedSiteFeatures: React.FC = () => {
 
       {/* 4. Global Search Modal (Ctrl+K) */}
       {searchOpen && (
-        <div className="fixed inset-0 z-[10000] bg-slate-950/70 backdrop-blur-md flex items-start justify-center p-4 pt-20 animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 max-w-xl w-full rounded-3xl shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-slate-100 dark:border-white/10 flex items-center gap-3">
+        <div className="fixed inset-0 z-[10000] bg-slate-900/50 backdrop-blur-sm flex items-start justify-center p-4 pt-20 animate-in fade-in duration-150">
+          <div className="bg-white border border-slate-200 max-w-xl w-full rounded-3xl shadow-2xl overflow-hidden">
+            <div className="p-4 border-b border-slate-100 flex items-center gap-3">
               <Search className="w-5 h-5 text-slate-400" />
               <input
                 autoFocus
@@ -211,17 +193,17 @@ export const EnhancedSiteFeatures: React.FC = () => {
                 placeholder="Search modules, lessons, or quick links... (Esc to close)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder:text-slate-400 outline-none"
+                className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 outline-none"
               />
               <button
                 onClick={() => setSearchOpen(false)}
-                className="text-xs px-2 py-1 rounded-lg bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400 font-mono"
+                className="text-xs px-2 py-1 rounded-lg bg-slate-100 text-slate-500 font-mono"
               >
                 ESC
               </button>
             </div>
 
-            <div className="p-2 max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-white/5">
+            <div className="p-2 max-h-80 overflow-y-auto divide-y divide-slate-100">
               {filteredRoutes.map((item) => (
                 <button
                   key={item.path}
@@ -229,17 +211,17 @@ export const EnhancedSiteFeatures: React.FC = () => {
                     navigate(item.path);
                     setSearchOpen(false);
                   }}
-                  className="w-full p-3.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-white/5 transition flex items-center justify-between group"
+                  className="w-full p-3.5 rounded-2xl text-left hover:bg-slate-50 transition flex items-center justify-between group"
                 >
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition">
+                    <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition">
                       {item.title}
                     </h4>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    <p className="text-[11px] text-slate-500 mt-0.5">
                       {item.desc}
                     </p>
                   </div>
-                  <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition" />
+                  <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition" />
                 </button>
               ))}
 
@@ -250,14 +232,14 @@ export const EnhancedSiteFeatures: React.FC = () => {
               )}
             </div>
 
-            <div className="p-3 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
               <span>Platform Navigator</span>
               <button
                 onClick={() => {
                   setSearchOpen(false);
                   setFaqOpen(true);
                 }}
-                className="text-blue-500 hover:underline font-bold"
+                className="text-blue-600 hover:underline font-bold"
               >
                 View Spaced-Repetition FAQ
               </button>
@@ -268,30 +250,30 @@ export const EnhancedSiteFeatures: React.FC = () => {
 
       {/* 5. Contact / Ask Educator Floating Dialog */}
       {contactOpen && (
-        <div className="fixed inset-0 z-[10000] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 max-w-md w-full rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-[10000] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl relative">
             <button
               onClick={() => setContactOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="space-y-1 mb-4">
-              <span className="text-[10px] font-bold tracking-wider uppercase text-blue-600 dark:text-blue-400">
+              <span className="text-[10px] font-bold tracking-wider uppercase text-blue-600">
                 Aspirant Support
               </span>
-              <h3 className="text-lg font-black text-slate-900 dark:text-white">Ask NEX Academic Desk</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <h3 className="text-lg font-black text-slate-900">Ask NEX Academic Desk</h3>
+              <p className="text-xs text-slate-500">
                 Have a doubt on Vedic shortcuts, syllabus pacing, or platform features? Drop your note below.
               </p>
             </div>
 
             {contactSuccess ? (
-              <div className="p-6 text-center space-y-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-2xl border border-emerald-200 dark:border-emerald-800">
-                <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto" />
-                <h4 className="text-xs font-bold text-emerald-900 dark:text-emerald-300">Message Dispatched</h4>
-                <p className="text-[11px] text-emerald-700 dark:text-emerald-400">
+              <div className="p-6 text-center space-y-2 bg-emerald-50 rounded-2xl border border-emerald-200">
+                <CheckCircle className="w-8 h-8 text-emerald-600 mx-auto" />
+                <h4 className="text-xs font-bold text-emerald-900">Message Dispatched</h4>
+                <p className="text-[11px] text-emerald-700">
                   Our academic educator team will review your query within 24 hours.
                 </p>
               </div>
@@ -315,14 +297,14 @@ export const EnhancedSiteFeatures: React.FC = () => {
                   placeholder="Describe your query or topic challenge in detail..."
                   value={contactMsg}
                   onChange={(e) => setContactMsg(e.target.value)}
-                  className="w-full text-xs p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full text-xs p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 <div className="flex items-center justify-between text-[11px] text-slate-400">
                   <span>Priority Queue: Active</span>
                   <button
                     type="submit"
-                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-blue-600/20 active:scale-95 transition"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-600/20 active:scale-95 transition"
                   >
                     <span>Send Query</span>
                     <Send className="w-3.5 h-3.5" />
@@ -336,19 +318,19 @@ export const EnhancedSiteFeatures: React.FC = () => {
 
       {/* 6. Expandable FAQ Modal */}
       {faqOpen && (
-        <div className="fixed inset-0 z-[10000] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 max-w-lg w-full rounded-3xl p-6 shadow-2xl relative max-h-[85vh] overflow-y-auto">
+        <div className="fixed inset-0 z-[10000] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white border border-slate-200 max-w-lg w-full rounded-3xl p-6 shadow-2xl relative max-h-[85vh] overflow-y-auto">
             <button
               onClick={() => setFaqOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-1">
+            <h3 className="text-lg font-black text-slate-900 mb-1">
               Frequently Asked Questions
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+            <p className="text-xs text-slate-500 mb-4">
               Everything you need to know about the 180-Day Guided Mastery methodology.
             </p>
 
@@ -358,17 +340,17 @@ export const EnhancedSiteFeatures: React.FC = () => {
                 return (
                   <div
                     key={idx}
-                    className="border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden bg-slate-50/50 dark:bg-white/5"
+                    className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50/50"
                   >
                     <button
                       onClick={() => setActiveFaq(isOpen ? null : idx)}
-                      className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs font-bold text-slate-900 dark:text-white"
+                      className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs font-bold text-slate-900"
                     >
                       <span>{faq.q}</span>
                       {isOpen ? <ChevronUp className="w-4 h-4 shrink-0" /> : <ChevronDown className="w-4 h-4 shrink-0" />}
                     </button>
                     {isOpen && (
-                      <div className="px-4 pb-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-2">
+                      <div className="px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-2">
                         {faq.a}
                       </div>
                     )}
@@ -382,7 +364,7 @@ export const EnhancedSiteFeatures: React.FC = () => {
 
       {/* 7. Simple GDPR / Cookie Banner */}
       {!cookieConsent && (
-        <div className="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-[9990] p-4 rounded-3xl bg-slate-900/90 dark:bg-slate-950/95 text-white backdrop-blur-2xl border border-white/15 shadow-2xl animate-in slide-in-from-bottom duration-300">
+        <div className="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-[9990] p-4 rounded-3xl bg-slate-900 text-white backdrop-blur-2xl border border-slate-800 shadow-2xl animate-in slide-in-from-bottom duration-300">
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0">
               <Cookie className="w-5 h-5" />
@@ -390,7 +372,7 @@ export const EnhancedSiteFeatures: React.FC = () => {
             <div className="space-y-1">
               <h4 className="text-xs font-bold">Session & Spaced-Repetition Cookies</h4>
               <p className="text-[11px] text-slate-300 leading-relaxed">
-                NEX uses local storage and cookies strictly to preserve your active test timers, dark theme preference, and 180-day streak progress.
+                NEX uses local storage and cookies strictly to preserve your active test timers and 180-day streak progress.
               </p>
               <div className="pt-2 flex items-center gap-2">
                 <button
