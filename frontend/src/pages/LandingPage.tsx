@@ -25,7 +25,7 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Top Banner Notice */}
       <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white text-xs py-2 px-4 text-center font-medium shadow-sm">
         <span className="inline-flex items-center gap-2">
@@ -40,7 +40,7 @@ export const LandingPage: React.FC = () => {
       </div>
 
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <img
@@ -83,7 +83,7 @@ export const LandingPage: React.FC = () => {
       </header>
 
       {/* Live Mock Scores Ticker */}
-      <div className="border-b border-slate-200 bg-white overflow-hidden py-2.5">
+      <div className="border-b border-slate-200/70 bg-white/70 backdrop-blur-xs overflow-hidden py-2.5">
         <div className="flex items-center gap-8 whitespace-nowrap px-6 text-xs text-slate-600 max-w-7xl mx-auto overflow-x-auto scrollbar-none">
           <span className="inline-flex items-center gap-1.5 text-blue-700 font-bold uppercase tracking-wider text-[11px] shrink-0">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping inline-block" />
@@ -183,10 +183,10 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* SECTION: THE EXACT METHOD OF STUDY */}
-      <section id="method" className="py-20 bg-white border-b border-slate-200">
+      <section id="method" className="py-20 bg-transparent border-b border-slate-200/80">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
               The Study Architecture
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
@@ -199,7 +199,7 @@ export const LandingPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
-            <div className="bg-slate-50 border border-slate-200 rounded-3xl p-7 relative hover:shadow-md transition">
+            <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-3xl p-7 relative shadow-sm hover:shadow-md transition">
               <div className="w-10 h-10 rounded-2xl bg-blue-600 text-white font-black text-lg flex items-center justify-center mb-5 shadow-md shadow-blue-600/20">
                 1
               </div>
@@ -218,7 +218,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="bg-slate-50 border border-slate-200 rounded-3xl p-7 relative hover:shadow-md transition">
+            <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-3xl p-7 relative shadow-sm hover:shadow-md transition">
               <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-black text-lg flex items-center justify-center mb-5 shadow-md shadow-indigo-600/20">
                 2
               </div>
@@ -227,15 +227,15 @@ export const LandingPage: React.FC = () => {
                 Every lesson forces you through a strict 3-stage linear progression:
               </p>
               <div className="space-y-2.5 text-xs">
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
                   <strong className="text-blue-700 block">Stage 1: Theory & Concept Sheet</strong>
                   Split-screen video lecture and downloadable formula sheet.
                 </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
                   <strong className="text-indigo-700 block">Stage 2: Active Recall Drill</strong>
                   20 MCQs with instant slide-in Vedic short-trick solutions.
                 </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
                   <strong className="text-amber-700 block">Stage 3: Sectional Simulator</strong>
                   15-minute 25-question test with +2.0/-0.5 negative marking.
                 </div>
@@ -243,7 +243,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="bg-slate-50 border border-slate-200 rounded-3xl p-7 relative hover:shadow-md transition">
+            <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-3xl p-7 relative shadow-sm hover:shadow-md transition">
               <div className="w-10 h-10 rounded-2xl bg-rose-600 text-white font-black text-lg flex items-center justify-center mb-5 shadow-md shadow-rose-600/20">
                 3
               </div>
@@ -266,7 +266,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* SECTION: 4-STAGE SEQUENTIAL ROADMAP */}
-      <section id="roadmap" className="py-20 bg-slate-50 border-b border-slate-200">
+      <section id="roadmap" className="py-20 bg-transparent border-b border-slate-200/80">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
@@ -397,10 +397,10 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* SECTION: PLATFORM FEATURES GRID */}
-      <section id="features" className="py-20 bg-white border-b border-slate-200">
+      <section id="features" className="py-20 bg-transparent border-b border-slate-200/80">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
               Platform Features
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
@@ -413,7 +413,7 @@ export const LandingPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Feature 1 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+            <div className="p-6 rounded-3xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs hover:shadow-md transition">
               <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
                 <Clock className="w-6 h-6" />
               </div>
@@ -424,7 +424,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 2 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+            <div className="p-6 rounded-3xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs hover:shadow-md transition">
               <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6" />
               </div>
@@ -435,7 +435,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 3 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+            <div className="p-6 rounded-3xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs hover:shadow-md transition">
               <div className="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center mb-4">
                 <Lock className="w-6 h-6" />
               </div>
@@ -446,7 +446,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 4 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+            <div className="p-6 rounded-3xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs hover:shadow-md transition">
               <div className="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center mb-4">
                 <Sparkles className="w-6 h-6" />
               </div>
@@ -457,7 +457,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 5 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+            <div className="p-6 rounded-3xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs hover:shadow-md transition">
               <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
                 <RotateCcw className="w-6 h-6" />
               </div>
@@ -468,7 +468,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 6 */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+            <div className="p-6 rounded-3xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs hover:shadow-md transition">
               <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
                 <Award className="w-6 h-6" />
               </div>
@@ -482,10 +482,10 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* SECTION: COMPARISON TABLE */}
-      <section id="comparison" className="py-20 bg-slate-50 border-b border-slate-200">
+      <section id="comparison" className="py-20 bg-transparent border-b border-slate-200/80">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               Why We Are Different
             </span>
             <h2 className="text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
@@ -493,11 +493,11 @@ export const LandingPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs sm:text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-100/70 text-slate-700">
+                  <tr className="border-b border-slate-200 bg-slate-50 text-slate-700">
                     <th className="p-4 font-bold">Preparation Feature</th>
                     <th className="p-4 font-bold text-blue-700 bg-blue-50/60">NEX Platform</th>
                     <th className="p-4 font-semibold text-slate-500">YouTube / Free Playlists</th>
@@ -543,10 +543,10 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* SECTION: FREQUENTLY ASKED QUESTIONS */}
-      <section id="faq" className="py-20 bg-white border-b border-slate-200">
+      <section id="faq" className="py-20 bg-transparent border-b border-slate-200/80">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
               Clear Answers
             </span>
             <h2 className="text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
@@ -579,10 +579,10 @@ export const LandingPage: React.FC = () => {
             ].map((faq, idx) => {
               const isOpen = activeFaq === idx;
               return (
-                <div key={idx} className="border border-slate-200 rounded-2xl bg-slate-50/60 overflow-hidden">
+                <div key={idx} className="border border-slate-200/80 rounded-2xl bg-white/90 backdrop-blur-md overflow-hidden shadow-2xs">
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-5 text-left font-bold text-slate-900 flex items-center justify-between gap-4 hover:bg-slate-100/70 transition"
+                    className="w-full p-5 text-left font-bold text-slate-900 flex items-center justify-between gap-4 hover:bg-slate-50/80 transition"
                   >
                     <span className="text-sm sm:text-base">{faq.q}</span>
                     <span className={`text-slate-400 font-mono text-lg transition-transform ${isOpen ? 'rotate-90' : ''}`}>
@@ -590,7 +590,7 @@ export const LandingPage: React.FC = () => {
                     </span>
                   </button>
                   {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60">
+                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
                       {faq.a}
                     </div>
                   )}
@@ -602,7 +602,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* BOTTOM CTA BANNER */}
-      <section className="py-20 bg-gradient-to-b from-blue-50 to-white text-center">
+      <section className="py-20 bg-transparent text-center">
         <div className="max-w-4xl mx-auto px-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200 text-blue-800 text-xs font-bold mb-4">
             <Zap className="w-3.5 h-3.5" /> Stop Guessing What to Study Today
@@ -620,7 +620,7 @@ export const LandingPage: React.FC = () => {
               </Button>
             </Link>
             <Link to="/login" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto h-13 px-8 text-base border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto h-13 px-8 text-base border-slate-300 hover:bg-white text-slate-700 font-semibold rounded-xl shadow-xs">
                 Existing Student Sign In
               </Button>
             </Link>
@@ -629,7 +629,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-10 text-xs text-slate-500">
+      <footer className="border-t border-slate-200/80 bg-white/80 backdrop-blur-md py-10 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="NEX" className="h-9 w-9 object-contain rounded-xl shadow-sm border border-slate-200/80" />

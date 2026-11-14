@@ -77,32 +77,32 @@ const ICONS_MAP: Record<string, React.ElementType> = {
 
 const COLOR_MAP: Record<string, { border: string; bg: string; text: string; badge: string; btn: string }> = {
   reasoning: {
-    border: 'border-purple-500/30 hover:border-purple-500',
-    bg: 'bg-purple-950/20',
-    text: 'text-purple-400',
-    badge: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-    btn: 'bg-purple-600 hover:bg-purple-500',
+    border: 'border-purple-200 hover:border-purple-400',
+    bg: 'bg-purple-50',
+    text: 'text-purple-700',
+    badge: 'bg-purple-50 text-purple-700 border-purple-200',
+    btn: 'bg-purple-600 hover:bg-purple-700',
   },
   ga: {
-    border: 'border-emerald-500/30 hover:border-emerald-500',
-    bg: 'bg-emerald-950/20',
-    text: 'text-emerald-400',
-    badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-    btn: 'bg-emerald-600 hover:bg-emerald-500',
+    border: 'border-emerald-200 hover:border-emerald-400',
+    bg: 'bg-emerald-50',
+    text: 'text-emerald-700',
+    badge: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    btn: 'bg-emerald-600 hover:bg-emerald-700',
   },
   quant: {
-    border: 'border-blue-500/30 hover:border-blue-500',
-    bg: 'bg-blue-950/20',
-    text: 'text-blue-400',
-    badge: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    btn: 'bg-blue-600 hover:bg-blue-500',
+    border: 'border-blue-200 hover:border-blue-400',
+    bg: 'bg-blue-50',
+    text: 'text-blue-700',
+    badge: 'bg-blue-50 text-blue-700 border-blue-200',
+    btn: 'bg-blue-600 hover:bg-blue-700',
   },
   english: {
-    border: 'border-amber-500/30 hover:border-amber-500',
-    bg: 'bg-amber-950/20',
-    text: 'text-amber-400',
-    badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-    btn: 'bg-amber-600 hover:bg-amber-500',
+    border: 'border-amber-200 hover:border-amber-400',
+    bg: 'bg-amber-50',
+    text: 'text-amber-700',
+    badge: 'bg-amber-50 text-amber-700 border-amber-200',
+    btn: 'bg-amber-600 hover:bg-amber-700',
   },
 };
 
@@ -401,14 +401,14 @@ export const AdminSubjectsPage: React.FC = () => {
   return (
     <div className="space-y-6 animate-in fade-in duration-200 font-sans pb-16">
       {/* Top Banner */}
-      <div className="p-6 rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-6 rounded-3xl border border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-bold mb-2">
-            <BookOpen className="h-3.5 w-3.5 text-indigo-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold mb-2">
+            <BookOpen className="h-3.5 w-3.5 text-blue-600" />
             Subject-Wise Content Architect
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Subject Lessons Hub</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Subject Lessons Hub</h1>
+          <p className="text-xs text-slate-500 mt-1">
             Create, edit, and organize lecture modules, Stage 2 active recall drills, and Stage 3 3-set progressive quizzes.
           </p>
         </div>
@@ -417,7 +417,7 @@ export const AdminSubjectsPage: React.FC = () => {
           {!selectedSubjectKey && (
             <Button
               onClick={() => setShowCreateCardModal(true)}
-              className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl h-10 gap-1.5 shadow-lg shadow-blue-600/30 active:scale-95 transition"
+              className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl h-10 gap-1.5 shadow-md shadow-blue-600/20 active:scale-95 transition"
             >
               <Plus className="h-4 w-4" />
               <span>Create New Subject Card</span>
@@ -428,7 +428,7 @@ export const AdminSubjectsPage: React.FC = () => {
             <Button
               variant="outline"
               onClick={() => setSelectedSubjectKey(null)}
-              className="border-white/15 bg-white/5 hover:bg-white/10 text-slate-200 text-xs font-bold gap-1.5 rounded-xl h-10 active:scale-95 transition"
+              className="border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold gap-1.5 rounded-xl h-10 active:scale-95 transition"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to All Subjects</span>
@@ -438,8 +438,8 @@ export const AdminSubjectsPage: React.FC = () => {
       </div>
 
       {successMsg && (
-        <div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
           <span>{successMsg}</span>
         </div>
       )}
@@ -455,7 +455,7 @@ export const AdminSubjectsPage: React.FC = () => {
               <Card
                 key={subj.key}
                 onClick={() => setSelectedSubjectKey(subj.key)}
-                className={`border bg-slate-900/60 backdrop-blur-xl ${c.border} rounded-3xl p-6 cursor-pointer shadow-lg hover:shadow-2xl transition duration-200 flex flex-col justify-between group relative overflow-hidden`}
+                className={`border bg-white/90 backdrop-blur-xl ${c.border} rounded-3xl p-6 cursor-pointer shadow-sm hover:shadow-xl transition duration-200 flex flex-col justify-between group relative overflow-hidden`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -470,7 +470,7 @@ export const AdminSubjectsPage: React.FC = () => {
                         <button
                           onClick={(e) => handleDeleteSubjectCard(subj.key, e)}
                           title="Delete Card"
-                          className="p-1 rounded-lg hover:bg-rose-500/20 text-rose-400 transition"
+                          className="p-1 rounded-lg hover:bg-rose-50 text-rose-500 transition"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -478,16 +478,16 @@ export const AdminSubjectsPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-lg font-black text-white tracking-tight mb-1 group-hover:text-indigo-400 transition">
+                  <h3 className="text-lg font-black text-slate-900 tracking-tight mb-1 group-hover:text-blue-600 transition">
                     {subj.title}
                   </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-500 leading-relaxed mb-4">
                     {subj.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs">
-                  <span className="text-slate-400 font-semibold">
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-slate-500 font-semibold">
                     {subj.topic_count} Core Topics
                   </span>
                   <div className={`flex items-center gap-1 font-bold ${c.text} group-hover:translate-x-1 transition-transform`}>
@@ -505,14 +505,14 @@ export const AdminSubjectsPage: React.FC = () => {
       {selectedSubjectKey && currentSubjectObj && (
         <div className="space-y-6">
           {/* Register New Lesson Form with AI Auto-Generator */}
-          <Card className="border border-white/10 bg-slate-900/70 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
-            <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <Card className="border border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-lg rounded-3xl overflow-hidden">
+            <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Plus className="h-4 w-4 text-indigo-400" />
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Plus className="h-4 w-4 text-blue-600" />
                   <span>Register New Lesson under {currentSubjectObj.title}</span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   Enter Title & YouTube URL, click <strong>"AI Generate Summary & Speed Tricks"</strong> to auto-fill notes.
                 </p>
               </div>
@@ -525,30 +525,30 @@ export const AdminSubjectsPage: React.FC = () => {
               <form onSubmit={handleCreateLesson} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-300">Lesson Title *</label>
+                    <label className="text-xs font-bold text-slate-700">Lesson Title *</label>
                     <Input
                       required
                       placeholder="e.g. Ratio & Proportion - Foundation Shortcuts"
                       value={newTitle}
                       onChange={(e) => setNewTitle(e.target.value)}
-                      className="text-xs bg-white/5 border-white/15 text-white rounded-xl h-11"
+                      className="text-xs bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-xl h-11 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-300">YouTube Video URL / Embed ID</label>
+                    <label className="text-xs font-bold text-slate-700">YouTube Video URL / Embed ID</label>
                     <Input
                       placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                       value={newYoutubeUrl}
                       onChange={(e) => setNewYoutubeUrl(e.target.value)}
-                      className="text-xs bg-white/5 border-white/15 text-white rounded-xl h-11"
+                      className="text-xs bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-xl h-11 focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-slate-300">
+                    <label className="text-xs font-bold text-slate-700">
                       Short Concept Notes / Speed Tricks
                     </label>
 
@@ -557,7 +557,7 @@ export const AdminSubjectsPage: React.FC = () => {
                       type="button"
                       disabled={generatingNotes}
                       onClick={handleGenerateSummaryAndTricks}
-                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-600/30 active:scale-95 transition"
+                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-600/20 active:scale-95 transition"
                     >
                       {generatingNotes ? (
                         <>
@@ -578,7 +578,7 @@ export const AdminSubjectsPage: React.FC = () => {
                     placeholder="Click the AI Generate button above or enter short summary notes and key Vedic speed formulas..."
                     value={newShortNotes}
                     onChange={(e) => setNewShortNotes(e.target.value)}
-                    className="w-full text-xs p-3.5 bg-white/5 border border-white/15 text-white rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full text-xs p-3.5 bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs"
                   />
                 </div>
 
@@ -586,7 +586,7 @@ export const AdminSubjectsPage: React.FC = () => {
                   <Button
                     type="submit"
                     disabled={creating}
-                    className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl h-11 px-6 gap-2 shadow-lg shadow-blue-600/30 active:scale-95 transition"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl h-11 px-6 gap-2 shadow-md shadow-blue-600/20 active:scale-95 transition"
                   >
                     {creating ? (
                       <>
@@ -608,24 +608,24 @@ export const AdminSubjectsPage: React.FC = () => {
           {/* Active Lessons List */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <span>Active Lessons in {currentSubjectObj.title}</span>
-                <Badge variant="outline" className="text-xs border-white/15 text-slate-300">
+                <Badge variant="outline" className="text-xs border-slate-200 text-slate-600 bg-slate-50">
                   {subjectLessons.length} Total
                 </Badge>
               </h3>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-500">
                 Manage lesson content, Stage 2 Active Recall, and Stage 3 3-Set Quizzes
               </span>
             </div>
 
             {loadingLessons ? (
-              <div className="p-12 text-center bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-white/10 text-xs text-slate-400">
-                <Loader2 className="w-6 h-6 animate-spin text-indigo-400 mx-auto mb-2" />
+              <div className="p-12 text-center bg-white/80 backdrop-blur-xl rounded-3xl border border-slate-200 text-xs text-slate-500">
+                <Loader2 className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-2" />
                 Loading lessons...
               </div>
             ) : subjectLessons.length === 0 ? (
-              <div className="p-8 text-center bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-white/10 text-xs text-slate-400">
+              <div className="p-8 text-center bg-white/80 backdrop-blur-xl rounded-3xl border border-slate-200 text-xs text-slate-500">
                 No lessons registered yet in this stream. Use the form above to add your first lesson.
               </div>
             ) : (
@@ -633,11 +633,11 @@ export const AdminSubjectsPage: React.FC = () => {
                 {subjectLessons.map((l) => (
                   <Card
                     key={l.id}
-                    className="border border-white/10 bg-slate-900/60 backdrop-blur-xl rounded-3xl p-5 shadow-lg flex flex-col justify-between hover:border-indigo-500/40 transition"
+                    className="border border-slate-200/80 bg-white/90 backdrop-blur-xl rounded-3xl p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <Badge className="bg-white/10 text-slate-200 border-white/10 text-[10px] font-bold">
+                        <Badge className="bg-slate-100 text-slate-700 border-slate-200 text-[10px] font-bold">
                           Day {l.day_sequence > 0 ? l.day_sequence : 'Unassigned'}
                         </Badge>
                         <div className="flex items-center gap-1.5">
@@ -645,43 +645,43 @@ export const AdminSubjectsPage: React.FC = () => {
                           <button
                             onClick={() => handleOpenQuizStudio(l)}
                             title="Manage Stage 2 & Stage 3 Quizzes"
-                            className="px-2.5 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 text-[11px] font-bold flex items-center gap-1 transition"
+                            className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-[11px] font-bold flex items-center gap-1 transition"
                           >
-                            <Zap className="h-3 w-3 text-amber-400" />
+                            <Zap className="h-3 w-3 text-amber-500" />
                             <span>AI Quizzes</span>
                           </button>
 
                           <button
                             onClick={() => handleOpenEditLesson(l)}
                             title="Edit Lesson"
-                            className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition"
+                            className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition"
                           >
                             <Pencil className="h-3.5 w-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteLesson(l.id)}
                             title="Delete Lesson"
-                            className="p-1.5 rounded-lg hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition"
+                            className="p-1.5 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       </div>
 
-                      <h4 className="text-sm font-bold text-white leading-snug">{l.title}</h4>
-                      <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                      <h4 className="text-sm font-bold text-slate-900 leading-snug">{l.title}</h4>
+                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
                         {l.short_trick_notes}
                       </p>
                     </div>
 
-                    <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
-                      <span className="flex items-center gap-1 text-[11px] text-indigo-400 font-semibold">
+                    <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                      <span className="flex items-center gap-1 text-[11px] text-blue-700 font-semibold">
                         <Play className="h-3 w-3" />
                         Embed: {l.youtube_embed_id}
                       </span>
                       <button
                         onClick={() => handleOpenQuizStudio(l)}
-                        className="text-[11px] text-amber-400 hover:underline font-bold"
+                        className="text-[11px] text-blue-700 hover:underline font-bold"
                       >
                         Configure 3-Set Mocks &rarr;
                       </button>
@@ -696,40 +696,40 @@ export const AdminSubjectsPage: React.FC = () => {
 
       {/* AI QUIZ STUDIO MODAL: STAGE 2 ACTIVE RECALL & STAGE 3 3-SET MCQ QUIZZES */}
       {activeQuizLesson && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/15 max-w-4xl w-full rounded-3xl p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 max-w-4xl w-full rounded-3xl p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto text-slate-900">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+                  <span className="p-2 rounded-xl bg-blue-50 text-blue-700 border border-blue-200">
                     <Zap className="w-5 h-5" />
                   </span>
-                  <h3 className="text-lg font-black text-white">AI Quiz & Stage Architecture Studio</h3>
+                  <h3 className="text-lg font-black text-slate-900">AI Quiz & Stage Architecture Studio</h3>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">
-                  Lesson: <strong className="text-white">{activeQuizLesson.title}</strong>
+                <p className="text-xs text-slate-500 mt-1">
+                  Lesson: <strong className="text-slate-800">{activeQuizLesson.title}</strong>
                 </p>
               </div>
               <button
                 onClick={() => setActiveQuizLesson(null)}
-                className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white"
+                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Stage 2 Active Recall Generator Section */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-emerald-400" />
+                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-emerald-600" />
                     <span>Stage 2: Active Recall & Shortcut Drill</span>
-                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-[10px]">
+                    <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px]">
                       {quizzesOverview?.stage2_active_recall?.length || 0} Questions
                     </Badge>
                   </h4>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     Common practice drill with hidden shortcuts and step-by-step explanations revealed upon answering.
                   </p>
                 </div>
@@ -737,7 +737,7 @@ export const AdminSubjectsPage: React.FC = () => {
                 <Button
                   onClick={handleGenerateStage2}
                   disabled={generatingStage2}
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl h-9 px-4 gap-1.5 shrink-0 active:scale-95 transition"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl h-9 px-4 gap-1.5 shrink-0 active:scale-95 transition"
                 >
                   {generatingStage2 ? (
                     <>
@@ -757,31 +757,31 @@ export const AdminSubjectsPage: React.FC = () => {
               {quizzesOverview?.stage2_active_recall && quizzesOverview.stage2_active_recall.length > 0 && (
                 <div className="space-y-2 pt-2">
                   {quizzesOverview.stage2_active_recall.map((q, idx) => (
-                    <div key={idx} className="p-3.5 rounded-xl bg-slate-950/60 border border-white/5 text-xs space-y-2">
-                      <div className="flex items-center justify-between font-bold text-slate-200">
+                    <div key={idx} className="p-3.5 rounded-xl bg-white border border-slate-200 text-xs space-y-2 shadow-2xs">
+                      <div className="flex items-center justify-between font-bold text-slate-900">
                         <span>Q{idx + 1}. {q.question_text}</span>
-                        <span className="text-emerald-400 font-mono">Correct: ({q.correct_opt})</span>
+                        <span className="text-emerald-700 font-mono">Correct: ({q.correct_opt})</span>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-400">
+                      <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600">
                         <div>A) {q.opt_a}</div>
                         <div>B) {q.opt_b}</div>
                         <div>C) {q.opt_c}</div>
                         <div>D) {q.opt_d}</div>
                       </div>
-                      <div className="flex items-center justify-between pt-1 border-t border-white/5">
+                      <div className="flex items-center justify-between pt-1 border-t border-slate-100">
                         <button
                           onClick={() => toggleShortcutReveal(`s2_${idx}`)}
-                          className="text-[10px] text-amber-400 hover:underline flex items-center gap-1 font-bold"
+                          className="text-[10px] text-amber-700 hover:underline flex items-center gap-1 font-bold"
                         >
                           {revealedShortcuts[`s2_${idx}`] ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
                           <span>{revealedShortcuts[`s2_${idx}`] ? 'Hide Shortcut & Solution' : 'View Hidden Shortcut & Explanation'}</span>
                         </button>
-                        <span className="text-[10px] text-slate-500">Stage 2 Active Recall</span>
+                        <span className="text-[10px] text-slate-400">Stage 2 Active Recall</span>
                       </div>
                       {revealedShortcuts[`s2_${idx}`] && (
-                        <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-200 text-[11px] space-y-1">
+                        <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-[11px] space-y-1">
                           <p><strong>⚡ Shortcut:</strong> {q.short_trick || 'Value-putting elimination technique'}</p>
-                          <p className="text-slate-300"><strong>Explanation:</strong> {q.explanation}</p>
+                          <p className="text-slate-700"><strong>Explanation:</strong> {q.explanation}</p>
                         </div>
                       )}
                     </div>
@@ -791,13 +791,13 @@ export const AdminSubjectsPage: React.FC = () => {
             </div>
 
             {/* Stage 3 Sectional Simulator 3-Set Generator Section */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-4">
+            <div className="p-5 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-4">
               <div>
-                <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Calculator className="w-4 h-4 text-blue-400" />
+                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <Calculator className="w-4 h-4 text-blue-600" />
                   <span>Stage 3: Sectional Simulator 3-Set Quiz Engine</span>
                 </h4>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   1st attempt serves Set 1 (Medium), 2nd attempt serves Set 2 (Medium-Hard), 3rd attempt serves Set 3 (Hard / Advanced).
                   Further attempts automatically shuffle Sets 1, 2, and 3.
                 </p>
@@ -809,74 +809,74 @@ export const AdminSubjectsPage: React.FC = () => {
                 <button
                   disabled={generatingSetNum !== null}
                   onClick={() => handleGenerateQuizSet(1)}
-                  className="p-4 rounded-2xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-left transition active:scale-95 group"
+                  className="p-4 rounded-2xl bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-left transition active:scale-95 shadow-2xs group"
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-blue-300">MCQ Quiz 1</span>
-                    <Badge className="bg-blue-500/20 text-blue-300 text-[10px]">
+                    <span className="text-xs font-bold text-blue-700">MCQ Quiz 1</span>
+                    <Badge className="bg-blue-50 text-blue-700 border-blue-200 text-[10px]">
                       {quizzesOverview?.set1_attempt1?.length || 0} Qs
                     </Badge>
                   </div>
-                  <h5 className="text-xs font-black text-white">Generate Set 1 (1st Attempt)</h5>
-                  <p className="text-[11px] text-slate-400 mt-1">Medium Level • Tier 1 Speed</p>
-                  {generatingSetNum === 1 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-blue-400" />}
+                  <h5 className="text-xs font-black text-slate-900">Generate Set 1 (1st Attempt)</h5>
+                  <p className="text-[11px] text-slate-500 mt-1">Medium Level • Tier 1 Speed</p>
+                  {generatingSetNum === 1 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-blue-600" />}
                 </button>
 
                 {/* Button 2: Set 2 */}
                 <button
                   disabled={generatingSetNum !== null}
                   onClick={() => handleGenerateQuizSet(2)}
-                  className="p-4 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-left transition active:scale-95 group"
+                  className="p-4 rounded-2xl bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-left transition active:scale-95 shadow-2xs group"
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-indigo-300">MCQ Quiz 2</span>
-                    <Badge className="bg-indigo-500/20 text-indigo-300 text-[10px]">
+                    <span className="text-xs font-bold text-indigo-700">MCQ Quiz 2</span>
+                    <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 text-[10px]">
                       {quizzesOverview?.set2_attempt2?.length || 0} Qs
                     </Badge>
                   </div>
-                  <h5 className="text-xs font-black text-white">Generate Set 2 (2nd Attempt)</h5>
-                  <p className="text-[11px] text-slate-400 mt-1">Medium-Hard • Trap Defense</p>
-                  {generatingSetNum === 2 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-indigo-400" />}
+                  <h5 className="text-xs font-black text-slate-900">Generate Set 2 (2nd Attempt)</h5>
+                  <p className="text-[11px] text-slate-500 mt-1">Medium-Hard • Trap Defense</p>
+                  {generatingSetNum === 2 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-indigo-600" />}
                 </button>
 
                 {/* Button 3: Set 3 */}
                 <button
                   disabled={generatingSetNum !== null}
                   onClick={() => handleGenerateQuizSet(3)}
-                  className="p-4 rounded-2xl bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-left transition active:scale-95 group"
+                  className="p-4 rounded-2xl bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-300 text-left transition active:scale-95 shadow-2xs group"
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-purple-300">MCQ Quiz 3</span>
-                    <Badge className="bg-purple-500/20 text-purple-300 text-[10px]">
+                    <span className="text-xs font-bold text-purple-700">MCQ Quiz 3</span>
+                    <Badge className="bg-purple-50 text-purple-700 border-purple-200 text-[10px]">
                       {quizzesOverview?.set3_attempt3?.length || 0} Qs
                     </Badge>
                   </div>
-                  <h5 className="text-xs font-black text-white">Generate Set 3 (3rd Attempt)</h5>
-                  <p className="text-[11px] text-slate-400 mt-1">Hard / Advanced • Tier 2 Twists</p>
-                  {generatingSetNum === 3 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-purple-400" />}
+                  <h5 className="text-xs font-black text-slate-900">Generate Set 3 (3rd Attempt)</h5>
+                  <p className="text-[11px] text-slate-500 mt-1">Hard / Advanced • Tier 2 Twists</p>
+                  {generatingSetNum === 3 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-purple-600" />}
                 </button>
 
                 {/* Button 4: Revision Quiz */}
                 <button
                   disabled={generatingSetNum !== null}
                   onClick={() => handleGenerateQuizSet(4)}
-                  className="p-4 rounded-2xl bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-left transition active:scale-95 group"
+                  className="p-4 rounded-2xl bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-left transition active:scale-95 shadow-2xs group"
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-amber-300">Revision Drill</span>
-                    <Badge className="bg-amber-500/20 text-amber-300 text-[10px]">
+                    <span className="text-xs font-bold text-amber-700">Revision Drill</span>
+                    <Badge className="bg-amber-50 text-amber-700 border-amber-200 text-[10px]">
                       {quizzesOverview?.revision_set?.length || 0} Qs
                     </Badge>
                   </div>
-                  <h5 className="text-xs font-black text-white">Generate Revision Quiz</h5>
-                  <p className="text-[11px] text-slate-400 mt-1">Challenging Spaced Retention</p>
-                  {generatingSetNum === 4 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-amber-400" />}
+                  <h5 className="text-xs font-black text-slate-900">Generate Revision Quiz</h5>
+                  <p className="text-[11px] text-slate-500 mt-1">Challenging Spaced Retention</p>
+                  {generatingSetNum === 4 && <Loader2 className="w-3.5 h-3.5 animate-spin mt-2 text-amber-600" />}
                 </button>
               </div>
 
               {/* Shuffling Info Banner */}
-              <div className="p-3 rounded-xl bg-slate-950/40 border border-white/5 flex items-center gap-2.5 text-xs text-slate-400">
-                <Shuffle className="w-4 h-4 text-indigo-400 shrink-0" />
+              <div className="p-3 rounded-xl bg-white border border-slate-200 flex items-center gap-2.5 text-xs text-slate-600">
+                <Shuffle className="w-4 h-4 text-blue-600 shrink-0" />
                 <span>
                   <strong>Dynamic Exam Logic:</strong> If candidate retakes a lesson beyond attempt 3, the engine automatically shuffles Sets 1, 2, and 3 to ensure fresh evaluation without rote memorization.
                 </span>
@@ -888,16 +888,16 @@ export const AdminSubjectsPage: React.FC = () => {
 
       {/* Edit Lesson Modal */}
       {editingLesson && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/15 max-w-lg w-full rounded-3xl p-6 space-y-4 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 max-w-lg w-full rounded-3xl p-6 space-y-4 shadow-2xl text-slate-900">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Pencil className="h-4 w-4 text-indigo-400" />
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Pencil className="h-4 w-4 text-blue-600" />
                 <span>Edit Lesson Module</span>
               </h3>
               <button
                 onClick={() => setEditingLesson(null)}
-                className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white"
+                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -905,31 +905,31 @@ export const AdminSubjectsPage: React.FC = () => {
 
             <form onSubmit={handleSaveEditLesson} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Lesson Title *</label>
+                <label className="text-xs font-bold text-slate-700">Lesson Title *</label>
                 <Input
                   required
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  className="text-xs bg-white/5 border-white/15 text-white rounded-xl h-11"
+                  className="text-xs bg-white border-slate-200 text-slate-900 rounded-xl h-11"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">YouTube URL / Video ID</label>
+                <label className="text-xs font-bold text-slate-700">YouTube URL / Video ID</label>
                 <Input
                   value={editYoutubeUrl}
                   onChange={(e) => setEditYoutubeUrl(e.target.value)}
-                  className="text-xs bg-white/5 border-white/15 text-white rounded-xl h-11"
+                  className="text-xs bg-white border-slate-200 text-slate-900 rounded-xl h-11"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Short Concept Notes</label>
+                <label className="text-xs font-bold text-slate-700">Short Concept Notes</label>
                 <textarea
                   rows={3}
                   value={editShortNotes}
                   onChange={(e) => setEditShortNotes(e.target.value)}
-                  className="w-full text-xs p-3 bg-white/5 border border-white/15 text-white rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full text-xs p-3 bg-white border border-slate-200 text-slate-900 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -938,14 +938,14 @@ export const AdminSubjectsPage: React.FC = () => {
                   type="button"
                   variant="outline"
                   onClick={() => setEditingLesson(null)}
-                  className="border-white/15 text-slate-300 rounded-xl text-xs"
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl text-xs"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={savingEdit}
-                  className="bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold"
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold"
                 >
                   {savingEdit ? 'Saving...' : 'Save Changes'}
                 </Button>
@@ -957,54 +957,54 @@ export const AdminSubjectsPage: React.FC = () => {
 
       {/* Create Subject Card Modal */}
       {showCreateCardModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/15 max-w-md w-full rounded-3xl p-6 space-y-4 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 space-y-4 shadow-2xl text-slate-900">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Layers className="h-4 w-4 text-indigo-400" />
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Layers className="h-4 w-4 text-blue-600" />
                 <span>Create New Subject Stream Card</span>
               </h3>
               <button
                 onClick={() => setShowCreateCardModal(false)}
-                className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white"
+                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Add a brand new card for an additional SSC subject stream (e.g. Computer Knowledge, Static GK).
             </p>
 
             <form onSubmit={handleCreateSubjectCard} className="space-y-3">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-300">Subject Title *</label>
+                <label className="text-xs font-bold text-slate-700">Subject Title *</label>
                 <Input
                   required
                   placeholder="e.g. Computer Knowledge & Typing"
                   value={cardTitle}
                   onChange={(e) => setCardTitle(e.target.value)}
-                  className="text-xs bg-white/5 border-white/15 text-white rounded-xl h-11"
+                  className="text-xs bg-white border-slate-200 text-slate-900 rounded-xl h-11"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-300">Card Identifier / Key (Optional)</label>
+                <label className="text-xs font-bold text-slate-700">Card Identifier / Key (Optional)</label>
                 <Input
                   placeholder="e.g. computer"
                   value={cardKey}
                   onChange={(e) => setCardKey(e.target.value)}
-                  className="text-xs bg-white/5 border-white/15 text-white rounded-xl h-11"
+                  className="text-xs bg-white border-slate-200 text-slate-900 rounded-xl h-11"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-300">Description</label>
+                <label className="text-xs font-bold text-slate-700">Description</label>
                 <textarea
                   rows={2}
                   placeholder="Short description of this subject stream..."
                   value={cardDesc}
                   onChange={(e) => setCardDesc(e.target.value)}
-                  className="w-full text-xs p-2.5 bg-white/5 border border-white/15 text-white rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full text-xs p-2.5 bg-white border border-slate-200 text-slate-900 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -1013,14 +1013,14 @@ export const AdminSubjectsPage: React.FC = () => {
                   type="button"
                   variant="outline"
                   onClick={() => setShowCreateCardModal(false)}
-                  className="border-white/15 text-slate-300 rounded-xl text-xs"
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl text-xs"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={creatingCard}
-                  className="bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold"
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold"
                 >
                   {creatingCard ? 'Creating...' : 'Create Subject Card'}
                 </Button>

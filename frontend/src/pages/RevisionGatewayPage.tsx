@@ -185,7 +185,7 @@ export const RevisionGatewayPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500 text-sm">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-slate-500 text-sm">
         <div className="flex flex-col items-center gap-3">
           <div className="h-8 w-8 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
           <span className="font-semibold">Entering Spaced-Repetition Gateway...</span>
@@ -196,7 +196,7 @@ export const RevisionGatewayPage: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-6 text-center">
         <p className="text-rose-600 mb-4 font-bold">{error || 'Session not found'}</p>
         <Button onClick={() => navigate('/dashboard')} variant="outline" className="border-slate-300">
           Return to Dashboard
@@ -210,9 +210,9 @@ export const RevisionGatewayPage: React.FC = () => {
   const answeredCount = Object.keys(userAnswers).length;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans">
       {/* Top Gateway Header */}
-      <header className="h-16 border-b border-slate-200 bg-white px-4 sm:px-6 flex items-center justify-between shrink-0">
+      <header className="h-16 border-b border-slate-200/80 bg-white/85 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"

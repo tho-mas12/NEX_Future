@@ -135,7 +135,7 @@ export const StudyPlayerPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-slate-500">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
           <p className="text-sm font-semibold">Mounting Study Rail Module...</p>
@@ -146,8 +146,8 @@ export const StudyPlayerPage: React.FC = () => {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-800">
-        <div className="text-center p-8 bg-white border border-slate-200 rounded-3xl max-w-md shadow-lg">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-slate-800">
+        <div className="text-center p-8 bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-3xl max-w-md shadow-lg">
           <AlertCircle className="w-12 h-12 text-rose-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-slate-900 mb-2">Lesson Not Found</h2>
           <p className="text-slate-500 text-sm mb-6">The requested lesson could not be loaded or is currently locked.</p>
@@ -166,9 +166,9 @@ export const StudyPlayerPage: React.FC = () => {
   const currentPracticeQ = practice_questions[practiceIndex];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans">
       {/* Top Header Rail Navigation */}
-      <header className="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-40 px-6 py-3 flex items-center justify-between">
+      <header className="border-b border-slate-200/80 bg-white/85 backdrop-blur-md sticky top-0 z-40 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/dashboard')}

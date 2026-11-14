@@ -315,8 +315,8 @@ export const MockArenaPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-600 text-sm font-sans">
-        <div className="flex flex-col items-center gap-3 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-slate-600 text-sm font-sans">
+        <div className="flex flex-col items-center gap-3 bg-white/90 backdrop-blur-xl p-8 rounded-3xl border border-slate-200/80 shadow-md">
           <div className="h-10 w-10 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
           <span className="font-bold text-slate-800">
             {isMindMock ? 'Synthesizing Adaptive Mind Mock Test...' : 'Initializing 100-Question Simulated Arena...'}
@@ -329,8 +329,8 @@ export const MockArenaPage: React.FC = () => {
 
   if (error || !paper) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center font-sans">
-        <div className="max-w-md bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-6 text-center font-sans">
+        <div className="max-w-md bg-white/95 backdrop-blur-xl p-8 rounded-3xl border border-slate-200/80 shadow-md space-y-4">
           <AlertTriangle className="h-10 w-10 text-amber-500 mx-auto" />
           <h2 className="text-lg font-bold text-slate-900">Examination Engine Offline</h2>
           <p className="text-xs text-slate-600">{error || 'Mock Arena could not be loaded.'}</p>
@@ -350,7 +350,7 @@ export const MockArenaPage: React.FC = () => {
   // RESULT & REVIEW ANALYSIS VIEW
   if (result) {
     return (
-      <div className="min-h-screen bg-slate-50 text-slate-900 p-4 sm:p-10 flex flex-col items-center font-sans">
+      <div className="min-h-screen bg-transparent text-slate-900 p-4 sm:p-10 flex flex-col items-center font-sans">
         <div className="max-w-4xl w-full space-y-6 animate-in zoom-in-95 duration-200">
           {/* Header */}
           <div className="text-center space-y-2">
@@ -574,9 +574,9 @@ export const MockArenaPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans select-none">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans select-none">
       {/* Top Test Header */}
-      <header className="h-16 border-b border-slate-200 bg-white px-4 sm:px-6 flex items-center justify-between shrink-0 shadow-sm sticky top-0 z-30">
+      <header className="h-16 border-b border-slate-200/80 bg-white/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between shrink-0 shadow-sm sticky top-0 z-30">
         <div className="flex items-center gap-3">
           <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
           <div>

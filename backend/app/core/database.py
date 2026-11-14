@@ -74,19 +74,7 @@ async def init_db():
             session.add(admin)
             await session.commit()
 
-        # Check default student user
-        student_res = await session.exec(select(User).where(User.email == "student@examrail.in"))
-        if not student_res.first():
-            student = User(
-                email="student@examrail.in",
-                name="Aspirant Arjun",
-                hashed_password=get_password_hash("student123"),
-                role=UserRole.STUDENT,
-                onboarding_completed=True,
-                streak_count=12
-            )
-            session.add(student)
-            await session.commit()
+        # Database starts completely empty for students - only Admin exists
 
         # Check if topics exist; if not, auto-seed 4 stages
         top_res = await session.exec(select(Topic))

@@ -174,10 +174,10 @@ export const OnboardingPage: React.FC = () => {
   const progressPercentage = step === 1 ? 33 : step === 2 ? 33 + ((currentQIndex + 1) / (questions.length || 1)) * 34 : 100;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between p-4 sm:p-8 font-sans">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col justify-between p-4 sm:p-8 font-sans">
       {/* Top Header & Step Indicator */}
       <div className="max-w-3xl mx-auto w-full pt-4">
-        <div className="flex items-center justify-between mb-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+        <div className="flex items-center justify-between mb-4 bg-white/90 backdrop-blur-xl p-4 rounded-2xl border border-slate-200/80 shadow-sm">
           <div className="flex items-center gap-3">
             <img
               src="/logo.png"

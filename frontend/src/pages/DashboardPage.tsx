@@ -135,7 +135,7 @@ export const DashboardPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500 font-sans">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-slate-500 font-sans">
         <div className="flex flex-col items-center gap-3">
           <div className="h-9 w-9 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
           <p className="text-xs font-bold text-slate-600 tracking-wide uppercase">Mounting Guided Master Rail...</p>
@@ -146,11 +146,11 @@ export const DashboardPage: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 font-sans">
-        <div className="text-center p-8 bg-white border border-slate-200 rounded-3xl max-w-md shadow-sm">
+      <div className="min-h-screen bg-transparent flex items-center justify-center p-4 font-sans">
+        <div className="text-center p-8 bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-3xl max-w-md shadow-md">
           <h2 className="text-lg font-bold text-slate-900 mb-2">Notice</h2>
           <p className="text-xs text-slate-600 mb-4">{error || 'Session sync error.'}</p>
-          <Button onClick={() => fetchDashboard()} className="bg-blue-600 text-white font-bold text-xs rounded-xl">
+          <Button onClick={() => fetchDashboard()} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl">
             Retry Connection
           </Button>
         </div>
@@ -189,9 +189,9 @@ export const DashboardPage: React.FC = () => {
   const hasActiveRevisionsDue = overdue_revisions.length > 0 || upcoming_revisions.some((r) => r.deadline === 'Today');
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-sans">
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link to="/dashboard" className="flex items-center gap-3">

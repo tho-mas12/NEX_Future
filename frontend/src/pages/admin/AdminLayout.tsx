@@ -50,9 +50,9 @@ export const AdminLayout: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col md:flex-row font-sans">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col md:flex-row font-sans">
       {/* Mobile Header Bar */}
-      <div className="md:hidden sticky top-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-xs">
+      <div className="md:hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-3 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-3">
           <img
             src="/logo.png"
@@ -151,7 +151,7 @@ export const AdminLayout: React.FC = () => {
       )}
 
       {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex w-64 border-r border-slate-200 bg-white flex-col justify-between shrink-0 sticky top-0 h-screen overflow-y-auto">
+      <aside className="hidden md:flex w-64 border-r border-slate-200/80 bg-white/85 backdrop-blur-md flex-col justify-between shrink-0 sticky top-0 h-screen overflow-y-auto">
         <div className="p-5 space-y-6">
           {/* Logo */}
           <div className="flex items-center gap-3">
