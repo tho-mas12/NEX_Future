@@ -79,11 +79,19 @@ async def get_revision_session(
     is_overdue = now > rev_deadline
     days_overdue = (now - rev_deadline).days + 1 if is_overdue else 0
 
-    # Fetch practice/test questions for this lesson
-    q_stmt = select(Question).where(Question.lesson_id == lesson.id).limit(15)
+    # Fetch targeted revision questions (Set 4 Revision Drill or Set 3 Hard questions)
+    q_stmt = select(Question).where(
+        Question.lesson_id == lesson.id,
+        Question.quiz_set.in_([3, 4])
+    ).limit(15)
     questions_db = (await session.exec(q_stmt)).all()
 
-    # If lesson has no questions, pull from general questions
+    # If specific revision set not generated, pull from all lesson questions
+    if not questions_db:
+        q_stmt_lesson = select(Question).where(Question.lesson_id == lesson.id).limit(15)
+        questions_db = (await session.exec(q_stmt_lesson)).all()
+
+    # If lesson has no questions at all, pull from general questions
     if not questions_db:
         q_stmt_all = select(Question).limit(15)
         questions_db = (await session.exec(q_stmt_all)).all()

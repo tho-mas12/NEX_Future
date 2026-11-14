@@ -30,6 +30,8 @@ async def init_db():
             "ALTER TABLE global_settings ADD COLUMN youtube_api_key VARCHAR",
             "ALTER TABLE global_settings ADD COLUMN maintenance_mode BOOLEAN DEFAULT 0",
             "ALTER TABLE global_settings ADD COLUMN allow_registrations BOOLEAN DEFAULT 1",
+            "ALTER TABLE questions ADD COLUMN quiz_set INTEGER DEFAULT 1",
+            "ALTER TABLE questions ADD COLUMN difficulty_level VARCHAR DEFAULT 'medium'",
         ]:
             try:
                 await conn.execute(text(col_sql))

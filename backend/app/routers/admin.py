@@ -836,46 +836,224 @@ async def generate_ai_mcqs_for_lesson(
     session: Annotated[AsyncSession, Depends(get_session)]
 ):
     """
-    AI Question Generator: creates 6 tailored MCQs across Easy, Medium, and Harder tiers
-    derived from the lesson title and core short trick principles.
+    AI Question Generator: creates tailored MCQs across Easy, Medium, and Harder tiers.
     """
+    from app.core.ai_services import generate_stage3_quiz_set
     lesson = (await session.exec(select(Lesson).where(Lesson.id == lesson_id))).first()
     if not lesson:
         raise HTTPException(status_code=404, detail="Lesson not found")
 
-    title = lesson.title
-    notes = lesson.short_trick_notes or "Speed shortcut and pattern recognition"
+    topic = (await session.exec(select(Topic).where(Topic.id == lesson.topic_id))).first()
+    subject_val = topic.subject.value if topic else "General Aptitude"
 
-    templates = [
-        # Easy Tier (Initial learning)
-        ("Easy (Initial MCQ)", f"What is the foundational definition or rule for [{title}] in SSC CGL?", "Direct application of basic rule", "Complex multiple algebra", "Random elimination", "Undefined parameter", "A", f"Foundational standard rule: {notes}"),
-        ("Easy (Initial MCQ)", f"Which shortcut approach eliminates false options fastest in [{title}]?", "Unit digit & digital sum checking", "Long traditional formula calculation", "Guesswork", "Skipping the question entirely", "A", "Standard shortcut elimination technique."),
-        # Medium Tier (Daily Test)
-        ("Medium (Daily Test)", f"In a standard Tier 1 timed problem on [{title}], how should step 2 be executed?", "Direct value substitution / Vedic triplet", "Writing 5 lines of derivation", "Factorization by quadratic formula", "Approximation error tolerance", "A", f"Recommended shortcut: {notes}"),
-        ("Medium (Daily Test)", f"If parameters in [{title}] are doubled, what is the net impact on result?", "Increases proportionally as per standard multiplier", "Halved automatically", "Remains zero", "Cannot be solved within 30 seconds", "A", "Proportionality rules apply directly."),
-        # Hard Tier (Spaced Revision)
-        ("Hard (Spaced Revision)", f"Advanced Tier 2 Twist on [{title}]: If a reverse condition is applied, which option is strictly correct?", "Inverse ratio method yields the optimal 20-second solution", "Quadratic discriminant analysis", "Logarithmic transformation", "Graphical coordinate plotting", "A", "Inverse ratio trick provides instantaneous resolution."),
-        ("Hard (Spaced Revision)", f"Trap Avoidance in [{title}]: What common error occurs under high exam pressure?", "Overlooking unit conversion or fixed condition", "Solving too fast", "Checking options backwards", "Applying basic formula", "A", "Watch for unit mismatches.")
-    ]
+    # Generate Set 1 by default
+    qs_data = await generate_stage3_quiz_set(
+        title=lesson.title,
+        notes=lesson.short_trick_notes or "",
+        subject=subject_val,
+        set_num=1,
+        difficulty="medium",
+        session=session
+    )
 
     created = []
-    for tier, q_text, opt_a, opt_b, opt_c, opt_d, correct, exp in templates:
+    for item in qs_data:
         q = Question(
             lesson_id=lesson.id,
-            question_text=f"[{tier}] {q_text}",
-            opt_a=opt_a,
-            opt_b=opt_b,
-            opt_c=opt_c,
-            opt_d=opt_d,
-            correct_opt=correct,
-            explanation=exp,
-            short_trick=f"AI Shortcut: {notes[:60]}"
+            question_text=item["question_text"],
+            opt_a=item["opt_a"],
+            opt_b=item["opt_b"],
+            opt_c=item["opt_c"],
+            opt_d=item["opt_d"],
+            correct_opt=item["correct_opt"],
+            explanation=item.get("explanation"),
+            short_trick=item.get("short_trick"),
+            quiz_set=1,
+            difficulty_level="medium"
         )
         session.add(q)
         created.append(q)
 
     await session.commit()
     return {"success": True, "created_count": len(created), "lesson_title": lesson.title}
+
+class GenerateSummaryRequest(BaseModel):
+    title: str
+    youtube_url: str = ""
+    subject: str = "General Aptitude"
+
+@router.post("/generate-lesson-summary")
+async def api_generate_lesson_summary(
+    req: GenerateSummaryRequest,
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """Generates AI concept notes, summary, and speed tricks from Title and YouTube URL."""
+    from app.core.ai_services import generate_lesson_summary_and_tricks
+    data = await generate_lesson_summary_and_tricks(
+        title=req.title,
+        youtube_url=req.youtube_url,
+        subject=req.subject,
+        session=session
+    )
+    return {"success": True, **data}
+
+class GenerateStage2Request(BaseModel):
+    title: str
+    short_notes: str = ""
+    subject: str = "General Aptitude"
+
+@router.post("/lessons/{lesson_id}/generate-stage2")
+async def api_generate_stage2(
+    lesson_id: uuid.UUID,
+    req: GenerateStage2Request,
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """Generates Stage 2 Active Recall Drill questions with hidden shortcuts."""
+    from app.core.ai_services import generate_stage2_active_recall
+    lesson = (await session.exec(select(Lesson).where(Lesson.id == lesson_id))).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+
+    items = await generate_stage2_active_recall(
+        title=req.title or lesson.title,
+        notes=req.short_notes or lesson.short_trick_notes or "",
+        subject=req.subject,
+        session=session
+    )
+
+    created = []
+    for q_data in items:
+        q = Question(
+            lesson_id=lesson.id,
+            question_text=q_data["question_text"],
+            opt_a=q_data["opt_a"],
+            opt_b=q_data["opt_b"],
+            opt_c=q_data["opt_c"],
+            opt_d=q_data["opt_d"],
+            correct_opt=q_data["correct_opt"],
+            explanation=q_data.get("explanation"),
+            short_trick=q_data.get("short_trick"),
+            quiz_set=0,  # 0 indicates Stage 2 Active Recall
+            difficulty_level="easy"
+        )
+        session.add(q)
+        created.append(q)
+
+    await session.commit()
+    return {"success": True, "created_count": len(created), "questions": items}
+
+class GenerateQuizSetRequest(BaseModel):
+    set_num: int = 1
+    difficulty: str = "medium"
+
+@router.post("/lessons/{lesson_id}/generate-quiz-set")
+async def api_generate_quiz_set(
+    lesson_id: uuid.UUID,
+    req: GenerateQuizSetRequest,
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """
+    Generates Stage 3 Sectional Simulator Quiz:
+    - Set 1: 1st Attempt (Medium)
+    - Set 2: 2nd Attempt (Medium-Hard)
+    - Set 3: 3rd Attempt (Hard / Advanced)
+    - Set 4: Revision Drill (Challenging Spaced Repetition)
+    """
+    from app.core.ai_services import generate_stage3_quiz_set
+    lesson = (await session.exec(select(Lesson).where(Lesson.id == lesson_id))).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+
+    topic = (await session.exec(select(Topic).where(Topic.id == lesson.topic_id))).first()
+    subject_val = topic.subject.value if topic else "General Aptitude"
+
+    # Remove existing questions for this specific set if regenerating
+    existing = (await session.exec(
+        select(Question).where(Question.lesson_id == lesson.id, Question.quiz_set == req.set_num)
+    )).all()
+    for eq in existing:
+        await session.delete(eq)
+
+    items = await generate_stage3_quiz_set(
+        title=lesson.title,
+        notes=lesson.short_trick_notes or "",
+        subject=subject_val,
+        set_num=req.set_num,
+        difficulty=req.difficulty,
+        session=session
+    )
+
+    created = []
+    for q_data in items:
+        q = Question(
+            lesson_id=lesson.id,
+            question_text=q_data["question_text"],
+            opt_a=q_data["opt_a"],
+            opt_b=q_data["opt_b"],
+            opt_c=q_data["opt_c"],
+            opt_d=q_data["opt_d"],
+            correct_opt=q_data["correct_opt"],
+            explanation=q_data.get("explanation"),
+            short_trick=q_data.get("short_trick"),
+            quiz_set=req.set_num,
+            difficulty_level=req.difficulty
+        )
+        session.add(q)
+        created.append(q)
+
+    await session.commit()
+    return {"success": True, "set_num": req.set_num, "created_count": len(created), "questions": items}
+
+@router.get("/lessons/{lesson_id}/quizzes-overview")
+async def get_lesson_quizzes_overview(
+    lesson_id: uuid.UUID,
+    current_admin: Annotated[User, Depends(get_current_admin)],
+    session: Annotated[AsyncSession, Depends(get_session)]
+):
+    """Returns all Stage 2 Active Recall and Stage 3 Quiz Sets for the lesson."""
+    qs = (await session.exec(select(Question).where(Question.lesson_id == lesson_id))).all()
+    
+    stage2 = []
+    set1, set2, set3, set_rev = [], [], [], []
+    for q in qs:
+        item = {
+            "id": str(q.id),
+            "question_text": q.question_text,
+            "opt_a": q.opt_a,
+            "opt_b": q.opt_b,
+            "opt_c": q.opt_c,
+            "opt_d": q.opt_d,
+            "correct_opt": q.correct_opt,
+            "explanation": q.explanation,
+            "short_trick": q.short_trick,
+            "quiz_set": q.quiz_set or 1,
+            "difficulty_level": q.difficulty_level or "medium"
+        }
+        if q.quiz_set == 0:
+            stage2.append(item)
+        elif q.quiz_set == 1:
+            set1.append(item)
+        elif q.quiz_set == 2:
+            set2.append(item)
+        elif q.quiz_set == 3:
+            set3.append(item)
+        elif q.quiz_set == 4:
+            set_rev.append(item)
+        else:
+            set1.append(item)
+
+    return {
+        "lesson_id": str(lesson_id),
+        "stage2_active_recall": stage2,
+        "set1_attempt1": set1,
+        "set2_attempt2": set2,
+        "set3_attempt3": set3,
+        "revision_set": set_rev,
+        "total_questions": len(qs)
+    }
 
 
 @router.post("/lessons/{lesson_id}/mcqs")

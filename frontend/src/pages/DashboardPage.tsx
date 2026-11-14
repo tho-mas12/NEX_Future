@@ -283,33 +283,36 @@ export const DashboardPage: React.FC = () => {
 
       {/* Main Dashboard Layout */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-8 space-y-6">
-        {/* HARDCORE SPACED-REPETITION BLOCKER BANNER */}
+        {/* HARDCORE SPACED-REPETITION BLOCKER BANNER (COMPACT & RESPONSIVE SCROLL) */}
         {is_locked && (
-          <div className="rounded-2xl border-2 border-rose-300 bg-rose-50 p-5 shadow-md animate-in fade-in duration-300">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="flex items-start gap-4">
-                <div className="h-11 w-11 rounded-xl bg-rose-100 border border-rose-200 text-rose-600 flex items-center justify-center shrink-0">
-                  <ShieldAlert className="h-6 w-6" />
+          <div className="rounded-2xl border-2 border-rose-500/40 bg-rose-950/40 backdrop-blur-xl p-4 sm:p-5 shadow-2xl animate-in fade-in duration-300">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div className="flex items-start gap-3.5">
+                <div className="h-10 w-10 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <ShieldAlert className="h-5 w-5" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-base sm:text-lg font-black text-rose-950 flex items-center gap-2">
-                    <span>ACCESS BLOCKED: Mandatory Revisions Overdue</span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-sm sm:text-base font-black text-rose-200">
+                      ACCESS BLOCKED: Mandatory Revisions Overdue
+                    </h3>
                     <Badge variant="destructive" className="text-[10px] py-0 px-2 font-bold uppercase bg-rose-600">
-                      Lock Active
+                      {overdue_revisions.length} Overdue
                     </Badge>
-                  </h3>
-                  <p className="text-xs sm:text-sm text-rose-800 leading-relaxed max-w-2xl">
-                    {lock_reason || 'You have pending revisions past the 2-day deadline. All new daily lessons are completely locked until you clear your pending reviews.'}
+                  </div>
+                  <p className="text-xs text-rose-300 leading-relaxed max-w-xl">
+                    {lock_reason || 'Pending revisions past the 2-day deadline. Daily syllabus lessons remain locked until reviews are cleared.'}
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 shrink-0">
+              {/* Compact scrollable container to prevent oversized list */}
+              <div className="flex items-center gap-2 overflow-x-auto py-1 max-w-full lg:max-w-md shrink-0 scrollbar-thin">
                 {overdue_revisions.map((rev) => (
-                  <Link key={rev.id} to={`/revision/${rev.id}`}>
-                    <Button className="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs gap-1.5 shadow-md shadow-rose-600/20 rounded-xl">
-                      <RotateCcw className="h-3.5 w-3.5" />
-                      <span>Clear Day +{rev.interval_days} ({rev.subject})</span>
+                  <Link key={rev.id} to={`/revision/${rev.id}`} className="shrink-0">
+                    <Button className="bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs gap-1.5 shadow-md shadow-rose-600/30 rounded-xl h-9 px-3">
+                      <RotateCcw className="h-3 w-3" />
+                      <span>Day +{rev.interval_days} ({rev.subject})</span>
                     </Button>
                   </Link>
                 ))}

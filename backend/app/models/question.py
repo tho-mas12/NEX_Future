@@ -13,6 +13,8 @@ class QuestionBase(SQLModel):
     correct_opt: str = Field(description="One of: A, B, C, D")
     explanation: Optional[str] = None
     short_trick: Optional[str] = Field(default=None, description="Shortcut or elimination trick for the slide-in solution")
+    quiz_set: Optional[int] = Field(default=1, description="1=Set 1 (First attempt), 2=Set 2, 3=Set 3, 4=Revision Drill")
+    difficulty_level: Optional[str] = Field(default="medium", description="easy, medium, hard, revision")
 
 class Question(QuestionBase, table=True):
     __tablename__ = "questions"

@@ -98,11 +98,12 @@ async def get_study_lesson_detail(
         else:
             raise HTTPException(status_code=404, detail="No lesson available")
 
-    # Fetch 20 Practice Questions with short tricks
-    q_stmt = select(Question).where(Question.lesson_id == lesson.id).limit(20)
+    # Stage 2: Active Recall Practice Questions (quiz_set == 0, or general lesson questions)
+    q_stmt = select(Question).where(Question.lesson_id == lesson.id, Question.quiz_set == 0)
     practice_qs = (await session.exec(q_stmt)).all()
-
-    if len(practice_qs) < 20:
+    if not practice_qs:
+        practice_qs = (await session.exec(select(Question).where(Question.lesson_id == lesson.id).limit(20))).all()
+    if not practice_qs:
         practice_qs = (await session.exec(select(Question).limit(20))).all()
 
     practice_out = [
@@ -117,12 +118,46 @@ async def get_study_lesson_detail(
             "explanation": q.explanation,
             "short_trick": q.short_trick or lesson.short_trick_notes or "Apply Vedic shortcut / value-putting"
         }
-        for q in practice_qs[:20]
+        for q in practice_qs
     ]
 
-    # Simulator Questions (mock_q_count, default 25)
-    sim_count = settings_obj.mock_q_count
-    sim_qs = (await session.exec(select(Question).limit(sim_count))).all()
+    # Stage 3: Sectional Simulator Questions with Attempt Progression
+    # Check user's attempt count for this lesson
+    from app.models.progress import UserProgress
+    prog = (await session.exec(
+        select(UserProgress).where(UserProgress.user_id == current_user.id, UserProgress.lesson_id == lesson.id)
+    )).first()
+    attempt_count = getattr(prog, "quiz_attempts", 0) if prog else 0
+
+    # Determine quiz_set (1 for 1st attempt, 2 for 2nd, 3 for 3rd; 4+ shuffles sets 1, 2, 3)
+    import random
+    if attempt_count == 0:
+        target_set = 1
+    elif attempt_count == 1:
+        target_set = 2
+    elif attempt_count == 2:
+        target_set = 3
+    else:
+        # Shuffled round-robin for repeated attempts
+        target_set = random.choice([1, 2, 3])
+
+    sim_qs = (await session.exec(
+        select(Question).where(Question.lesson_id == lesson.id, Question.quiz_set == target_set)
+    )).all()
+
+    # Fallback to general questions if set not generated yet
+    if not sim_qs:
+        sim_qs = (await session.exec(
+            select(Question).where(Question.lesson_id == lesson.id)
+        )).all()
+    if not sim_qs:
+        sim_qs = (await session.exec(select(Question).limit(settings_obj.mock_q_count))).all()
+
+    # If user has multiple attempts, shuffle questions for variety
+    sim_qs_list = list(sim_qs)
+    if attempt_count > 0:
+        random.shuffle(sim_qs_list)
+
     sim_out = [
         {
             "id": str(q.id),
@@ -133,9 +168,10 @@ async def get_study_lesson_detail(
             "opt_d": q.opt_d,
             "correct_opt": q.correct_opt,
             "explanation": q.explanation,
-            "short_trick": q.short_trick
+            "short_trick": q.short_trick,
+            "quiz_set": q.quiz_set or target_set
         }
-        for q in sim_qs[:sim_count]
+        for q in sim_qs_list[:settings_obj.mock_q_count]
     ]
 
     return {
